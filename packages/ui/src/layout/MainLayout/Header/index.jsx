@@ -13,6 +13,7 @@ import ProfileSection from './ProfileSection'
 import WorkspaceSwitcher from '@/layout/MainLayout/Header/WorkspaceSwitcher'
 import OrgWorkspaceBreadcrumbs from '@/layout/MainLayout/Header/OrgWorkspaceBreadcrumbs'
 import PricingDialog from '@/ui-component/subscription/PricingDialog'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // assets
 import { IconMenu2, IconX, IconSparkles } from '@tabler/icons-react'
@@ -33,6 +34,7 @@ import useNotifier from '@/utils/useNotifier'
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
+// MaterialUISwitch组件保持不变
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
@@ -80,7 +82,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     }
 }))
 
-const GitHubStarButton = ({ starCount, isDark }) => {
+// GitHubStarButton组件修改为使用翻译
+const GitHubStarButton = ({ starCount, isDark, t }) => {
     const theme = useTheme()
 
     const formattedStarCount = starCount.toLocaleString()
@@ -117,7 +120,7 @@ const GitHubStarButton = ({ starCount, isDark }) => {
                         ></path>
                     </svg>
                     <Typography variant='caption' sx={{ fontWeight: 600, color: isDark ? 'white' : theme.palette.text.primary }}>
-                        Star
+                        {t('star')}
                     </Typography>
                 </Box>
                 <Box
@@ -139,12 +142,14 @@ const GitHubStarButton = ({ starCount, isDark }) => {
 
 GitHubStarButton.propTypes = {
     starCount: PropTypes.number.isRequired,
-    isDark: PropTypes.bool.isRequired
+    isDark: PropTypes.bool.isRequired,
+    t: PropTypes.func.isRequired
 }
 
 const Header = ({ handleLeftDrawerToggle }) => {
     const theme = useTheme()
     const navigate = useNavigate()
+    const { language, changeLanguage, t } = useLanguage()
 
     const customization = useSelector((state) => state.customization)
     const logoutApi = useApi(accountApi.logout)
@@ -162,6 +167,25 @@ const Header = ({ handleLeftDrawerToggle }) => {
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args))
     const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args))
 
+    // 切换语言处理函数
+    const handleLanguageChange = (newLanguage) => {
+        // 先更新语言状态
+        changeLanguage(newLanguage)
+        
+        // 延迟执行DOM更新，确保React状态先更新
+        setTimeout(() => {
+            // 这里可以添加任何需要在语言切换后执行的DOM操作
+            applyTranslations()
+        }, 50)
+    }
+
+    // 应用翻译到DOM元素
+    const applyTranslations = () => {
+        // 这里可以实现更复杂的翻译逻辑，例如遍历带有特定data属性的元素
+        // 目前我们只是确保组件重新渲染，因为我们使用了React的状态管理
+        console.log(`Translations applied for language: ${language}`)
+    }
+
     const changeDarkMode = () => {
         dispatch({ type: SET_DARKMODE, isDarkMode: !isDark })
         setIsDark((isDark) => !isDark)
@@ -171,7 +195,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
     const signOutClicked = () => {
         logoutApi.request()
         enqueueSnackbar({
-            message: 'Logging out...',
+            message: t('loggingOut'),
             options: {
                 key: new Date().getTime() + Math.random(),
                 variant: 'success',
@@ -212,6 +236,11 @@ const Header = ({ handleLeftDrawerToggle }) => {
             fetchStarCount()
         }
     }, [isCloud, isOpenSource])
+
+    // 监听语言变化，应用翻译
+    useEffect(() => {
+        applyTranslations()
+    }, [language])
 
     return (
         <>
@@ -263,7 +292,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                         }
                     }}
                 >
-                    <GitHubStarButton starCount={starCount} isDark={isDark} />
+                    <GitHubStarButton starCount={starCount} isDark={isDark} t={t} />
                 </Box>
             ) : (
                 <Box sx={{ flexGrow: 1 }} />
@@ -294,7 +323,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                     onClick={() => setIsPricingOpen(true)}
                     startIcon={<IconSparkles size={20} />}
                 >
-                    Upgrade
+                    {t('upgrade')}
                 </Button>
             )}
             {isPricingOpen && isCloud && (
@@ -309,6 +338,38 @@ const Header = ({ handleLeftDrawerToggle }) => {
                     }}
                 />
             )}
+            {/* 语言切换按钮 */}
+            <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+                <Button
+                    variant={language === 'en' ? 'contained' : 'outlined'}
+                    size='small'
+                    onClick={() => handleLanguageChange('en')}
+                    sx={{ 
+                        minWidth: '40px',
+                        marginRight: '5px',
+                        backgroundColor: language === 'en' ? theme.palette.primary.main : 'transparent',
+                        '&:hover': {
+                            backgroundColor: language === 'en' ? theme.palette.primary.dark : 'rgba(0,0,0,0.04)'
+                        }
+                    }}
+                >
+                    EN
+                </Button>
+                <Button
+                    variant={language === 'zh' ? 'contained' : 'outlined'}
+                    size='small'
+                    onClick={() => handleLanguageChange('zh')}
+                    sx={{ 
+                        minWidth: '40px',
+                        backgroundColor: language === 'zh' ? theme.palette.primary.main : 'transparent',
+                        '&:hover': {
+                            backgroundColor: language === 'zh' ? theme.palette.primary.dark : 'rgba(0,0,0,0.04)'
+                        }
+                    }}
+                >
+                    中文
+                </Button>
+            </div>
             <MaterialUISwitch checked={isDark} onChange={changeDarkMode} />
             <Box sx={{ ml: 2 }}></Box>
             <ProfileSection handleLogout={signOutClicked} />

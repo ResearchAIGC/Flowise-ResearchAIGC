@@ -19,5 +19,31 @@ export default {
   error: '错误',
   // Header相关
   star: '收藏',
-  loggingOut: '正在退出登录...'
+  loggingOut: '正在退出登录...',
+  // 侧边栏菜单项
+  chatflows: '聊天流程',
+  agentflows: '智能体流程',
+  executions: '执行记录',
+  assistants: '智能助手',
+  marketplaces: '市场',
+  tools: '工具',
+  credentials: '凭证',
+  variables: '变量',
+  apikey: 'API密钥',
+  'document-stores': '文档存储',
+  // 评估相关
+  evaluations: '评估',
+  datasets: '数据集',
+  evaluators: '评估器',
+  // 用户和工作区管理
+  management: '用户与工作区管理',
+  sso: 'SSO配置',
+  roles: '角色',
+  users: '用户',
+  workspaces: '工作区',
+  'login-activity': '登录活动',
+  // 其他
+  others: '其他',
+  logs: '日志',
+  account: '账户设置'
 }

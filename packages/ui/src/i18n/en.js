@@ -19,5 +19,31 @@ export default {
   error: 'Error',
   // Header相关
   star: 'Star',
-  loggingOut: 'Logging out...'
+  loggingOut: 'Logging out...',
+  // 侧边栏菜单项
+  chatflows: 'Chatflows',
+  agentflows: 'Agentflows',
+  executions: 'Executions',
+  assistants: 'Assistants',
+  marketplaces: 'Marketplaces',
+  tools: 'Tools',
+  credentials: 'Credentials',
+  variables: 'Variables',
+  apikey: 'API Keys',
+  'document-stores': 'Document Stores',
+  // 评估相关
+  evaluations: 'Evaluations',
+  datasets: 'Datasets',
+  evaluators: 'Evaluators',
+  // 用户和工作区管理
+  management: 'User & Workspace Management',
+  sso: 'SSO Config',
+  roles: 'Roles',
+  users: 'Users',
+  workspaces: 'Workspaces',
+  'login-activity': 'Login Activity',
+  // 其他
+  others: 'Others',
+  logs: 'Logs',
+  account: 'Account Settings'
 }

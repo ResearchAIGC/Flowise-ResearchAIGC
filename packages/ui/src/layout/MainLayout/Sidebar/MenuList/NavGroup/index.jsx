@@ -9,12 +9,19 @@ import NavItem from '../NavItem'
 import NavCollapse from '../NavCollapse'
 import { useAuth } from '@/hooks/useAuth'
 import { Available } from '@/ui-component/rbac/available'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // ==============================|| SIDEBAR MENU LIST GROUP ||============================== //
 
 const NavGroup = ({ item }) => {
     const theme = useTheme()
     const { hasPermission, hasDisplay } = useAuth()
+    const { t } = useLanguage()
+
+    const shouldDisplayMenu = (menu) => {
+        // Check if menu should be displayed based on feature flag and permission
+        return (!menu.display || hasDisplay(menu.display)) && (!menu.permission || hasPermission(menu.permission))
+    }
 
     const listItems = (menu, level = 1) => {
         // Filter based on display and permission
@@ -33,22 +40,6 @@ const NavGroup = ({ item }) => {
                     </Typography>
                 )
         }
-    }
-
-    const shouldDisplayMenu = (menu) => {
-        // Handle permission check
-        if (menu.permission && !hasPermission(menu.permission)) {
-            return false // Do not render if permission is lacking
-        }
-
-        // If `display` is defined, check against cloud/enterprise conditions
-        if (menu.display) {
-            const shouldsiplay = hasDisplay(menu.display)
-            return shouldsiplay
-        }
-
-        // If `display` is not defined, display by default
-        return true
     }
 
     const renderPrimaryItems = () => {
@@ -74,7 +65,7 @@ const NavGroup = ({ item }) => {
                 subheader={
                     item.title && (
                         <Typography variant='caption' sx={{ ...theme.typography.menuCaption }} display='block' gutterBottom>
-                            {item.title}
+                            {t(item.id, item.title)}
                             {item.caption && (
                                 <Typography variant='caption' sx={{ ...theme.typography.subMenuCaption }} display='block' gutterBottom>
                                     {item.caption}
@@ -97,7 +88,7 @@ const NavGroup = ({ item }) => {
                             <List
                                 subheader={
                                     <Typography variant='caption' sx={{ ...theme.typography.subMenuCaption }} display='block' gutterBottom>
-                                        {group.title}
+                                        {t(group.id, group.title)}
                                     </Typography>
                                 }
                                 sx={{ p: '16px', py: 2, display: 'flex', flexDirection: 'column', gap: 1 }}

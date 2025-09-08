@@ -10,6 +10,7 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, u
 // project imports
 import { MENU_OPEN, SET_MENU } from '@/store/actions'
 import config from '@/config'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // assets
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
@@ -21,6 +22,7 @@ const NavItem = ({ item, level, navType, onClick, onUploadFile }) => {
     const dispatch = useDispatch()
     const customization = useSelector((state) => state.customization)
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'))
+    const { t } = useLanguage()
 
     const Icon = item.icon
     const itemIcon = item?.icon ? (
@@ -118,7 +120,7 @@ const NavItem = ({ item, level, navType, onClick, onUploadFile }) => {
                         color='inherit'
                         sx={{ my: 0.5 }}
                     >
-                        {item.title}
+                        {t(item.id, item.title)}
                     </Typography>
                 }
                 secondary={

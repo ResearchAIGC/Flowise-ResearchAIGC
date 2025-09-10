@@ -184,6 +184,27 @@ const Header = ({ handleLeftDrawerToggle }) => {
         // 这里可以实现更复杂的翻译逻辑，例如遍历带有特定data属性的元素
         // 目前我们只是确保组件重新渲染，因为我们使用了React的状态管理
         console.log(`Translations applied for language: ${language}`)
+        // 1. 获取所有需要翻译的元素
+        const elements = document.querySelectorAll('[data-i18n-key]')
+    
+        // 2. 为每个元素应用翻译
+        elements.forEach(element => {
+            const key = element.getAttribute('data-i18n-key')
+            const translatedText = t(key)
+            if (translatedText) {
+                element.textContent = translatedText
+            }
+        })
+        
+        // 3. 处理特殊情况（如placeholder、title等）
+        const placeholders = document.querySelectorAll('[data-i18n-placeholder]')
+        placeholders.forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder')
+            const translatedText = t(key)
+            if (translatedText) {
+                element.placeholder = translatedText
+            }
+        })
     }
 
     const changeDarkMode = () => {

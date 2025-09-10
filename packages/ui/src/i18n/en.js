@@ -45,5 +45,12 @@ export default {
   // 其他
   others: 'Others',
   logs: 'Logs',
-  account: 'Account Settings'
+  account: 'Account Settings',
+  // Chatflows页面相关
+  searchPlaceholder: 'Search Name or Category',
+  chatflowsDescription: 'Build single-agent systems, chatbots and simple LLM flows',
+  cardView: 'Card View',
+  listView: 'List View',
+  addNew: 'Add New',
+  noChatflowsYet: 'No Chatflows Yet'
 }

@@ -45,5 +45,12 @@ export default {
   // 其他
   others: '其他',
   logs: '日志',
-  account: '账户设置'
+  account: '账户设置',
+  // Chatflows页面相关
+  searchPlaceholder: '搜索名称或类别',
+  chatflowsDescription: '构建单智能体系统、聊天机器人和简单的LLM流程',
+  cardView: '卡片视图',
+  listView: '列表视图',
+  addNew: '新建',
+  noChatflowsYet: '暂无聊天流程'
 }

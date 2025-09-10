@@ -18,6 +18,7 @@ import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 const NavCollapse = ({ menu, level }) => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     const [open, setOpen] = useState(false)
     const [selected, setSelected] = useState(null)
@@ -74,7 +75,7 @@ const NavCollapse = ({ menu, level }) => {
                 <ListItemText
                     primary={
                         <Typography variant={selected === menu.id ? 'h5' : 'body1'} color='inherit' sx={{ my: 'auto' }}>
-                            {menu.title}
+                            {t(menu.id, menu.title)}
                         </Typography>
                     }
                     secondary={

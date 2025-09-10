@@ -22,6 +22,7 @@ import chatflowsApi from '@/api/chatflows'
 
 // Hooks
 import useApi from '@/hooks/useApi'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // const
 import { baseURL } from '@/store/constant'
@@ -35,6 +36,7 @@ import { IconPlus, IconLayoutGrid, IconList } from '@tabler/icons-react'
 const Chatflows = () => {
     const navigate = useNavigate()
     const theme = useTheme()
+    const { t } = useLanguage()
 
     const [isLoading, setLoading] = useState(true)
     const [images, setImages] = useState({})
@@ -137,9 +139,9 @@ const Chatflows = () => {
                     <ViewHeader
                         onSearchChange={onSearchChange}
                         search={true}
-                        searchPlaceholder='Search Name or Category'
-                        title='Chatflows'
-                        description='Build single-agent systems, chatbots and simple LLM flows'
+                        searchPlaceholder={t('searchPlaceholder', 'Search Name or Category')}
+                        title={t('chatflows', 'Chatflows')}
+                        description={t('chatflowsDescription', 'Build single-agent systems, chatbots and simple LLM flows')}
                     >
                         <ToggleButtonGroup
                             sx={{ borderRadius: 2, maxHeight: 40 }}
@@ -157,7 +159,7 @@ const Chatflows = () => {
                                 }}
                                 variant='contained'
                                 value='card'
-                                title='Card View'
+                                title={t('cardView', 'Card View')}
                             >
                                 <IconLayoutGrid />
                             </ToggleButton>
@@ -169,7 +171,7 @@ const Chatflows = () => {
                                 }}
                                 variant='contained'
                                 value='list'
-                                title='List View'
+                                title={t('listView', 'List View')}
                             >
                                 <IconList />
                             </ToggleButton>
@@ -181,7 +183,7 @@ const Chatflows = () => {
                             startIcon={<IconPlus />}
                             sx={{ borderRadius: 2, height: 40 }}
                         >
-                            Add New
+                            {t('addNew', 'Add New')}
                         </StyledPermissionButton>
                     </ViewHeader>
 
@@ -223,7 +225,7 @@ const Chatflows = () => {
                                     alt='WorkflowEmptySVG'
                                 />
                             </Box>
-                            <div>No Chatflows Yet</div>
+                            <div>{t('noChatflowsYet', 'No Chatflows Yet')}</div>
                         </Stack>
                     )}
                 </Stack>

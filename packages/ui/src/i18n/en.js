@@ -89,5 +89,50 @@ export default {
   marketplaceTableBadges: 'Badges',
   marketplaceTableSharedTemplate: 'Shared Template',
   marketplaceTableShare: 'Share',
-  marketplaceTableDelete: 'Delete'
+  marketplaceTableDelete: 'Delete',
+    // APICodeDialog related
+  noAuthorization: 'No Authorization',
+  cannotUseApiKey: 'You cannot use API key while embedding/sharing chatbot.',
+  nodes: 'Nodes',
+  variables: 'Variables',
+  specifyMultipleValues: 'You can also specify multiple values for a config parameter by specifying the node id',
+  streamingResponse: 'For streaming response, add ?stream=true to the URL',
+  
+  // ShareChatbot related
+  chatbotConfigSaved: 'Chatbot Configuration Saved',
+  failedToSaveChatbotConfig: 'Failed to save Chatbot Configuration',
+  titleSettings: 'Title Settings',
+  generalSettings: 'General Settings',
+  botMessage: 'Bot Message',
+  userMessage: 'User Message',
+  textInput: 'Text Input',
+  flowiseAssistant: 'Flowise Assistant',
+  typeQuestion: 'Type question..',
+  saveChanges: 'Save Changes',
+  
+  // EmbedChat related
+  hiThere: 'Hi There 👋!',
+  disclaimer: 'Disclaimer',
+  typeYourQuestion: 'Type your question',
+  pasteInBodyTag: 'Paste this anywhere in the <body> tag of your html file.',
+  version: 'version',
+  showEmbedChatConfig: 'Show Embed Chat Config',
+
+    // Agentflows related
+  agentflowsDescription: 'Multi-agent systems, workflow orchestration',
+  v1Deprecated: 'V1 Agentflows are deprecated.',
+  migrateToV2: 'We recommend migrating to V2 for improved performance and continued support.',
+  noAgentsYet: 'No Agents Yet',
+
+    // AgentflowsV2 specific translations
+  onlyOneStartNode: 'Only one start node is allowed',
+  duplicate: 'Duplicate',
+  deleteNode: 'Delete',
+  info: 'Info',
+  editName: 'Edit Name',
+  saveName: 'Save Name',
+  cancelEdit: 'Cancel',
+  toggleSnapping: 'toggle snapping',
+  editNote: 'Edit',
+  parameters: 'Parameters'
 }

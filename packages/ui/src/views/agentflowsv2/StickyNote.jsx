@@ -11,6 +11,7 @@ import { ButtonGroup, IconButton, Box } from '@mui/material'
 import { IconCopy, IconTrash } from '@tabler/icons-react'
 import { Input } from '@/ui-component/input/Input'
 import MainCard from '@/ui-component/cards/MainCard'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // const
 import { flowContext } from '@/store/context/ReactFlowContext'
@@ -36,6 +37,7 @@ const StyledNodeToolbar = styled(NodeToolbar)(({ theme }) => ({
 const StickyNote = ({ data }) => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
     const ref = useRef(null)
 
     const { reactFlowInstance, deleteNode, duplicateNode } = useContext(flowContext)
@@ -65,7 +67,7 @@ const StickyNote = ({ data }) => {
                 <ButtonGroup sx={{ gap: 1 }} variant='outlined' aria-label='Basic button group'>
                     <IconButton
                         size={'small'}
-                        title='Duplicate'
+                        title={t('duplicate')}
                         onClick={() => {
                             duplicateNode(data.id)
                         }}

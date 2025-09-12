@@ -10,6 +10,7 @@ import { IconSettings } from '@tabler/icons-react'
 
 // Project imports
 import NodeInputHandler from '../canvas/NodeInputHandler'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // API
 import nodesApi from '@/api/nodes'
@@ -21,6 +22,7 @@ import { FLOWISE_CREDENTIAL_ID } from '@/store/constant'
 
 export const ConfigInput = ({ data, inputParam, disabled = false, arrayIndex = null, parentParamForArray = null }) => {
     const theme = useTheme()
+    const { t } = useLanguage()
     const { reactFlowInstance } = useContext(flowContext)
 
     const [expanded, setExpanded] = useState(false)
@@ -293,7 +295,7 @@ export const ConfigInput = ({ data, inputParam, disabled = false, arrayIndex = n
                 <Accordion sx={{ background: 'transparent' }} expanded={expanded} onChange={handleAccordionChange}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ background: 'transparent' }}>
                         <IconSettings stroke={1.5} size='1.3rem' />
-                        <Typography sx={{ ml: 1 }}>{selectedComponentNodeData?.label} Parameters</Typography>
+                        <Typography sx={{ ml: 1 }}>{selectedComponentNodeData?.label} {t('parameters')}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         {(selectedComponentNodeData.inputParams ?? [])

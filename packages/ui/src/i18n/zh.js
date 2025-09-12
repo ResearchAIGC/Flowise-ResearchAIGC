@@ -89,6 +89,50 @@ export default {
   marketplaceTableBadges: '标签',
   marketplaceTableSharedTemplate: '已共享模板',
   marketplaceTableShare: '共享',
-  marketplaceTableDelete: '删除'
+  marketplaceTableDelete: '删除',
+    // APICodeDialog相关
+  noAuthorization: '无授权',
+  cannotUseApiKey: '嵌入/分享聊天机器人时不能使用API密钥。',
+  nodes: '节点',
+  variables: '变量',
+  specifyMultipleValues: '您还可以通过指定节点ID来为配置参数指定多个值',
+  streamingResponse: '对于流式响应，在URL中添加 ?stream=true',
+  
+  // ShareChatbot相关
+  chatbotConfigSaved: '聊天机器人配置已保存',
+  failedToSaveChatbotConfig: '保存聊天机器人配置失败',
+  titleSettings: '标题设置',
+  generalSettings: '通用设置',
+  botMessage: '机器人消息',
+  userMessage: '用户消息',
+  textInput: '文本输入',
+  flowiseAssistant: 'Flowise助手',
+  typeQuestion: '输入问题...',
+  saveChanges: '保存更改',
+  
+  // EmbedChat相关
+  hiThere: '你好 👋!',
+  disclaimer: '免责声明',
+  typeYourQuestion: '输入您的问题',
+  pasteInBodyTag: '将此粘贴到您的html文件的<body>标签中的任何位置。',
+  version: '版本',
+  showEmbedChatConfig: '显示嵌入聊天配置',
 
+    // Agentflows相关
+  agentflowsDescription: '多智能体系统、工作流编排',
+  v1Deprecated: 'V1智能体流程已过时。',
+  migrateToV2: '我们建议迁移到V2以获得更好的性能和持续支持。',
+  noAgentsYet: '暂无智能体流程',
+
+    // AgentflowsV2 specific translations
+  onlyOneStartNode: '只允许一个起始节点',
+  duplicate: '复制',
+  deleteNode: '删除',
+  info: '信息',
+  editName: '编辑名称',
+  saveName: '保存名称',
+  cancelEdit: '取消',
+  toggleSnapping: '切换对齐',
+  editNote: '编辑',
+  parameters: '参数'
 }

@@ -32,6 +32,7 @@ import EditNodeDialog from '@/views/agentflowsv2/EditNodeDialog'
 import ChatPopUp from '@/views/chatmessage/ChatPopUp'
 import ValidationPopUp from '@/views/chatmessage/ValidationPopUp'
 import { flowContext } from '@/store/context/ReactFlowContext'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // API
 import nodesApi from '@/api/nodes'
@@ -68,6 +69,7 @@ const AgentflowCanvas = () => {
     const theme = useTheme()
     const navigate = useNavigate()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     const { state } = useLocation()
     const templateFlowData = state ? state.templateFlowData : ''
@@ -304,7 +306,7 @@ const AgentflowCanvas = () => {
 
             if (nodeData.name === 'startAgentflow' && nodes.find((node) => node.data.name === 'startAgentflow')) {
                 enqueueSnackbar({
-                    message: 'Only one start node is allowed',
+                    message: t('onlyOneStartNode'),
                     options: {
                         key: new Date().getTime() + Math.random(),
                         variant: 'error',

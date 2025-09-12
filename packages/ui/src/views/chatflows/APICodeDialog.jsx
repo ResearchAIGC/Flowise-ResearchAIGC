@@ -28,6 +28,7 @@ import { Dropdown } from '@/ui-component/dropdown/Dropdown'
 import ShareChatbot from './ShareChatbot'
 import EmbedChat from './EmbedChat'
 import { Available } from '@/ui-component/rbac/available'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // Const
 import { baseURL } from '@/store/constant'
@@ -89,6 +90,7 @@ const APICodeDialog = ({ show, dialogProps, onCancel }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const theme = useTheme()
+    const { t } = useLanguage()
     const chatflow = useSelector((state) => state.canvas.chatflow)
     const apiConfig = chatflow?.apiConfig ? JSON.parse(chatflow.apiConfig) : {}
     const overrideConfigStatus = apiConfig?.overrideConfig?.status !== undefined ? apiConfig.overrideConfig.status : false
@@ -118,7 +120,7 @@ const APICodeDialog = ({ show, dialogProps, onCancel }) => {
 
         const options = [
             {
-                label: 'No Authorization',
+                label: t('noAuthorization', 'No Authorization'),
                 name: ''
             }
         ]
@@ -132,7 +134,7 @@ const APICodeDialog = ({ show, dialogProps, onCancel }) => {
 
         if (isGlobal || hasPermission('apikeys:create')) {
             options.push({
-                label: '- Add New Key -',
+                label: t('addNewKey', '- Add New Key -'),
                 name: 'addnewkey'
             })
         }
@@ -743,9 +745,11 @@ formData.append("openAIApiKey[openAIEmbeddings_0]", "sk-my-openai-2nd-key")`
                     <TabPanel key={index} value={value} index={index}>
                         {(codeLang === 'Embed' || codeLang === 'Share Chatbot') && chatflowApiKeyId && (
                             <>
-                                <p>You cannot use API key while embedding/sharing chatbot.</p>
                                 <p>
-                                    Please select <b>&quot;No Authorization&quot;</b> from the dropdown at the top right corner.
+                                    {t('cannotUseApiKeyWithEmbed', 'You cannot use API key while embedding/sharing chatbot.')}
+                                </p>
+                                <p>
+                                    {t('selectNoAuthorization', 'Please select')} <b>{t('noAuthorization', 'No Authorization')}</b>{t('fromDropdown', 'from the dropdown at the top right corner.')}
                                 </p>
                             </>
                         )}
@@ -763,7 +767,7 @@ formData.append("openAIApiKey[openAIEmbeddings_0]", "sk-my-openai-2nd-key")`
                                 {checkboxVal && getConfigApi.data && getConfigApi.data.length > 0 && (
                                     <>
                                         <Typography sx={{ mt: 2 }}>
-                                            You can override existing input configuration of the chatflow with overrideConfig property.
+                                            {t('overrideConfigDescription', 'You can override existing input configuration of the chatflow with overrideConfig property.')}
                                         </Typography>
                                         <div
                                             style={{
@@ -785,26 +789,24 @@ formData.append("openAIApiKey[openAIEmbeddings_0]", "sk-my-openai-2nd-key")`
                                             >
                                                 <IconExclamationCircle size={30} color='rgb(116,66,16)' />
                                                 <span style={{ color: 'rgb(116,66,16)', marginLeft: 10, fontWeight: 500 }}>
-                                                    {
-                                                        'For security reason, override config is disabled by default. You can change this by going into Chatflow Configuration -> Security tab, and enable the property you want to override.'
-                                                    }
-                                                    &nbsp;Refer{' '}
-                                                    <a
-                                                        rel='noreferrer'
-                                                        target='_blank'
-                                                        href='https://docs.flowiseai.com/using-flowise/prediction#configuration-override'
-                                                    >
-                                                        here
-                                                    </a>{' '}
-                                                    for more details
-                                                </span>
+                                                {t('securityReasonOverrideConfigDisabled', 'For security reason, override config is disabled by default. You can change this by going into Chatflow Configuration -> Security tab, and enable the property you want to override.')}
+                                                &nbsp;{t('referHere', 'Refer')}{' '}
+                                                <a
+                                                    rel='noreferrer'
+                                                    target='_blank'
+                                                    href='https://docs.flowiseai.com/using-flowise/prediction#configuration-override'
+                                                >
+                                                    {t('here', 'here')}
+                                                </a>{' '}
+                                                {t('forMoreDetails', 'for more details')}
+                                            </span>
                                             </div>
                                         </div>
                                         <Stack direction='column' spacing={2} sx={{ width: '100%', my: 2 }}>
                                             <Card sx={{ borderColor: theme.palette.primary[200] + 75, p: 2 }} variant='outlined'>
                                                 <Stack sx={{ mt: 1, mb: 2, ml: 1, alignItems: 'center' }} direction='row' spacing={2}>
                                                     <IconBox />
-                                                    <Typography variant='h4'>Nodes</Typography>
+                                                    <Typography variant='h4'>{t('nodes', 'Nodes')}</Typography>
                                                 </Stack>
                                                 {Object.keys(nodeConfig)
                                                     .sort()
@@ -870,7 +872,7 @@ formData.append("openAIApiKey[openAIEmbeddings_0]", "sk-my-openai-2nd-key")`
                                             <Card sx={{ borderColor: theme.palette.primary[200] + 75, p: 2 }} variant='outlined'>
                                                 <Stack sx={{ mt: 1, mb: 2, ml: 1, alignItems: 'center' }} direction='row' spacing={2}>
                                                     <IconVariable />
-                                                    <Typography variant='h4'>Variables</Typography>
+                                                    <Typography variant='h4'>{t('variables', 'Variables')}</Typography>
                                                 </Stack>
                                                 <TableViewOnly rows={variableOverrides} columns={['name', 'type', 'enabled']} />
                                             </Card>
@@ -910,7 +912,7 @@ formData.append("openAIApiKey[openAIEmbeddings_0]", "sk-my-openai-2nd-key")`
                                             >
                                                 <IconBulb size={30} color='#2d6a4f' />
                                                 <span style={{ color: '#2d6a4f', marginLeft: 10, fontWeight: 500 }}>
-                                                    You can also specify multiple values for a config parameter by specifying the node id
+                                                {t('specifyMultipleValues', 'You can also specify multiple values for a config parameter by specifying the node id')}
                                                 </span>
                                             </div>
                                             <div style={{ padding: 10 }}>
@@ -931,11 +933,11 @@ formData.append("openAIApiKey[openAIEmbeddings_0]", "sk-my-openai-2nd-key")`
                                 )}
                                 {getIsChatflowStreamingApi.data?.isStreaming && (
                                     <p>
-                                        Read&nbsp;
-                                        <a rel='noreferrer' target='_blank' href='https://docs.flowiseai.com/using-flowise/streaming'>
-                                            here
-                                        </a>
-                                        &nbsp;on how to stream response back to application
+                                    {t('readHere', 'Read')}&nbsp;
+                                    <a rel='noreferrer' target='_blank' href='https://docs.flowiseai.com/using-flowise/streaming'>
+                                        {t('here', 'here')}
+                                    </a>
+                                    &nbsp;{t('onHowToStreamResponse', 'on how to stream response back to application')}
                                     </p>
                                 )}
                             </>

@@ -22,7 +22,6 @@ import chatflowsApi from '@/api/chatflows'
 
 // Hooks
 import useApi from '@/hooks/useApi'
-import { useLanguage } from '@/store/context/LanguageContext'
 
 // const
 import { baseURL } from '@/store/constant'
@@ -30,6 +29,8 @@ import { useError } from '@/store/context/ErrorContext'
 
 // icons
 import { IconPlus, IconLayoutGrid, IconList } from '@tabler/icons-react'
+
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // ==============================|| CHATFLOWS ||============================== //
 

@@ -18,6 +18,7 @@ import MarketplaceCanvasHeader from '@/views/marketplaces/MarketplaceCanvasHeade
 import StickyNote from './StickyNote'
 import EditNodeDialog from '@/views/agentflowsv2/EditNodeDialog'
 import { flowContext } from '@/store/context/ReactFlowContext'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // icons
 import { IconMagnetFilled, IconMagnetOff } from '@tabler/icons-react'
@@ -31,6 +32,7 @@ const MarketplaceCanvasV2 = () => {
     const theme = useTheme()
     const navigate = useNavigate()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     const { state } = useLocation()
     const { flowData, name } = state
@@ -131,8 +133,8 @@ const MarketplaceCanvasV2 = () => {
                                         onClick={() => {
                                             setIsSnappingEnabled(!isSnappingEnabled)
                                         }}
-                                        title='toggle snapping'
-                                        aria-label='toggle snapping'
+                                        title={t('toggleSnapping')}
+                                        aria-label={t('toggleSnapping')}
                                     >
                                         {isSnappingEnabled ? <IconMagnetFilled /> : <IconMagnetOff />}
                                     </button>

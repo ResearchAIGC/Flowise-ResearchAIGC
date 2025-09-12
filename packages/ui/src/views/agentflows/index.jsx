@@ -17,6 +17,7 @@ import ViewHeader from '@/layout/MainLayout/ViewHeader'
 import ErrorBoundary from '@/ErrorBoundary'
 import { StyledPermissionButton } from '@/ui-component/button/RBACButtons'
 import TablePagination, { DEFAULT_ITEMS_PER_PAGE } from '@/ui-component/pagination/TablePagination'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // API
 import chatflowsApi from '@/api/chatflows'
@@ -37,6 +38,7 @@ const Agentflows = () => {
     const navigate = useNavigate()
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage() // Add translation hook
 
     const [isLoading, setLoading] = useState(true)
     const [images, setImages] = useState({})
@@ -177,9 +179,9 @@ const Agentflows = () => {
                     <ViewHeader
                         onSearchChange={onSearchChange}
                         search={true}
-                        searchPlaceholder='Search Name or Category'
-                        title='Agentflows'
-                        description='Multi-agent systems, workflow orchestration'
+                        searchPlaceholder={t('searchPlaceholder', 'Search Name or Category')}
+                        title={t('agentflows', 'Agentflows')}
+                        description={t('agentflowsDescription', 'Multi-agent systems, workflow orchestration')}
                     >
                         <ToggleButtonGroup
                             sx={{ borderRadius: 2, maxHeight: 40 }}
@@ -198,7 +200,7 @@ const Agentflows = () => {
                                 value='v2'
                                 title='V2'
                             >
-                                <Chip sx={{ mr: 1 }} label='NEW' size='small' color='primary' />
+                                <Chip sx={{ mr: 1 }} label={t('marketplaceBadgeNew', 'NEW')} size='small' color='primary' />
                                 V2
                             </ToggleButton>
                             <ToggleButton
@@ -230,7 +232,7 @@ const Agentflows = () => {
                                 }}
                                 variant='contained'
                                 value='card'
-                                title='Card View'
+                                title={t('cardView', 'Card View')}
                             >
                                 <IconLayoutGrid />
                             </ToggleButton>
@@ -242,7 +244,7 @@ const Agentflows = () => {
                                 }}
                                 variant='contained'
                                 value='list'
-                                title='List View'
+                                title={t('listView', 'List View')}
                             >
                                 <IconList />
                             </ToggleButton>
@@ -254,7 +256,7 @@ const Agentflows = () => {
                             startIcon={<IconPlus />}
                             sx={{ borderRadius: 2, height: 40 }}
                         >
-                            Add New
+                            {t('addNew', 'Add New')}
                         </StyledPermissionButton>
                     </ViewHeader>
 
@@ -282,8 +284,7 @@ const Agentflows = () => {
                                 }}
                             />
                             <Box sx={{ flex: 1 }}>
-                                <strong>V1 Agentflows are deprecated.</strong> We recommend migrating to V2 for improved performance and
-                                continued support.
+                                <strong>{t('v1Deprecated', 'V1 Agentflows are deprecated.')}</strong> {t('migrateToV2', 'We recommend migrating to V2 for improved performance and continued support.')}
                             </Box>
                             <IconButton
                                 aria-label='dismiss'
@@ -341,7 +342,7 @@ const Agentflows = () => {
                                     alt='AgentsEmptySVG'
                                 />
                             </Box>
-                            <div>No Agents Yet</div>
+                            <div>{t('noAgentsYet', 'No Agents Yet')}</div>
                         </Stack>
                     )}
                 </Stack>

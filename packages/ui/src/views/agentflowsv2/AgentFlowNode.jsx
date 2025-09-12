@@ -11,7 +11,7 @@ import { ButtonGroup, Avatar, Box, Typography, IconButton, Tooltip } from '@mui/
 import MainCard from '@/ui-component/cards/MainCard'
 import { flowContext } from '@/store/context/ReactFlowContext'
 import NodeInfoDialog from '@/ui-component/dialog/NodeInfoDialog'
-
+import { useLanguage } from '@/store/context/LanguageContext'
 // icons
 import {
     IconCheck,
@@ -55,6 +55,7 @@ const StyledNodeToolbar = styled(NodeToolbar)(({ theme }) => ({
 const AgentFlowNode = ({ data }) => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
     const canvas = useSelector((state) => state.canvas)
     const ref = useRef(null)
     const updateNodeInternals = useUpdateNodeInternals()
@@ -180,7 +181,7 @@ const AgentFlowNode = ({ data }) => {
                     {data.name !== 'startAgentflow' && (
                         <IconButton
                             size={'small'}
-                            title='Duplicate'
+                            title={t('duplicate')}
                             onClick={() => {
                                 duplicateNode(data.id)
                             }}

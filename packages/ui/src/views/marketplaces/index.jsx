@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -60,9 +59,10 @@ import { baseURL, AGENTFLOW_ICONS } from '@/store/constant'
 import { gridSpacing } from '@/store/constant'
 import { useError } from '@/store/context/ErrorContext'
 
-const badges = ['POPULAR', 'NEW']
-const types = ['Chatflow', 'AgentflowV2', 'Tool']
-const framework = ['Langchain', 'LlamaIndex']
+import { useLanguage } from '@/store/context/LanguageContext'
+
+const framework = ['Langchain', 'LlamaIndex'] // 技术术语保持不变
+
 const MenuProps = {
     PaperProps: {
         style: {
@@ -77,6 +77,12 @@ const Marketplace = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     useNotifier()
+
+    // 添加useLanguage钩子调用
+    const { t } = useLanguage()
+
+    const badges = [t('marketplaceBadgePopular'), t('marketplaceBadgeNew')]
+    const types = [t('marketplaceTypeChatflow'), t('marketplaceTypeAgentflowV2'), t('marketplaceTypeTool')]
 
     const theme = useTheme()
     const { error, setError } = useError()
@@ -117,12 +123,12 @@ const Marketplace = () => {
     const share = (template) => {
         const dialogProps = {
             type: 'EDIT',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Share',
+            cancelButtonName: t('cancel'),
+            confirmButtonName: t('marketplaceShareTitle'),
             data: {
                 id: template.id,
                 name: template.name,
-                title: 'Share Custom Template',
+                title: t('marketplaceShareCustomTemplate'),
                 itemType: 'custom_template'
             }
         }
@@ -218,11 +224,12 @@ const Marketplace = () => {
 
     const onDeleteCustomTemplate = async (template) => {
         const confirmPayload = {
-            title: `Delete`,
-            description: `Delete Custom Template ${template.name}?`,
-            confirmButtonName: 'Delete',
-            cancelButtonName: 'Cancel'
+            title: t('marketplaceDeleteTitle'),
+            description: `${t('marketplaceDeleteConfirm')} ${template.name}？`,
+            confirmButtonName: t('marketplaceDeleteTitle'),
+            cancelButtonName: t('cancel')
         }
+
         const isConfirmed = await confirm(confirmPayload)
 
         if (isConfirmed) {
@@ -230,7 +237,7 @@ const Marketplace = () => {
                 const deleteResp = await marketplacesApi.deleteCustomTemplate(template.id)
                 if (deleteResp.data) {
                     enqueueSnackbar({
-                        message: 'Custom Template deleted successfully!',
+                        message: t('marketplaceDeleteSuccess'),
                         options: {
                             key: new Date().getTime() + Math.random(),
                             variant: 'success',
@@ -321,10 +328,10 @@ const Marketplace = () => {
 
     const onUseTemplate = (selectedTool) => {
         const dialogProp = {
-            title: 'Add New Tool',
+            title: t('marketplaceAddNewTool'),
             type: 'IMPORT',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Add',
+            cancelButtonName: t('cancel'),
+            confirmButtonName: t('marketplaceAddButton'),
             data: selectedTool
         }
         setToolDialogProps(dialogProp)
@@ -485,7 +492,7 @@ const Marketplace = () => {
                                         }}
                                     >
                                         <InputLabel size='small' id='filter-badge-label'>
-                                            Tag
+                                            {t('marketplaceTag')}
                                         </InputLabel>
                                         <Select
                                             labelId='filter-badge-label'
@@ -521,7 +528,7 @@ const Marketplace = () => {
                                         }}
                                     >
                                         <InputLabel size='small' id='type-badge-label'>
-                                            Type
+                                            {t('marketplaceType')}
                                         </InputLabel>
                                         <Select
                                             size='small'
@@ -557,7 +564,7 @@ const Marketplace = () => {
                                         }}
                                     >
                                         <InputLabel size='small' id='type-fw-label'>
-                                            Framework
+                                            {t('marketplaceFramework')}
                                         </InputLabel>
                                         <Select
                                             size='small'
@@ -587,9 +594,9 @@ const Marketplace = () => {
                             }
                             onSearchChange={onSearchChange}
                             search={true}
-                            searchPlaceholder='Search Name/Description/Node'
-                            title='Marketplace'
-                            description='Explore and use pre-built templates'
+                            searchPlaceholder={t('marketplaceSearchPlaceholder')}
+                            title={t('marketplaceTitle')}
+                            description={t('marketplaceDescription')}
                         >
                             <ToggleButtonGroup
                                 sx={{ borderRadius: 2, height: '100%' }}
@@ -606,7 +613,7 @@ const Marketplace = () => {
                                     }}
                                     variant='contained'
                                     value='card'
-                                    title='Card View'
+                                    title={t('marketplaceCardView')}
                                 >
                                     <IconLayoutGrid />
                                 </ToggleButton>
@@ -618,7 +625,7 @@ const Marketplace = () => {
                                     }}
                                     variant='contained'
                                     value='list'
-                                    title='List View'
+                                    title={t('marketplaceListView')}
                                 >
                                     <IconList />
                                 </ToggleButton>
@@ -627,8 +634,8 @@ const Marketplace = () => {
                         {hasPermission('templates:marketplace') && hasPermission('templates:custom') && (
                             <Stack direction='row' justifyContent='space-between' sx={{ mb: 2 }}>
                                 <Tabs value={activeTabValue} onChange={handleTabChange} textColor='primary' aria-label='tabs'>
-                                    <PermissionTab permissionId='templates:marketplace' value={0} label='Community Templates' />
-                                    <PermissionTab permissionId='templates:custom' value={1} label='My Templates' />
+                                    <PermissionTab permissionId='templates:marketplace' value={0} label={t('marketplaceCommunityTemplates')} />
+                                    <PermissionTab permissionId='templates:custom' value={1} label={t('marketplaceMyTemplates')} />
                                 </Tabs>
                                 <Autocomplete
                                     id='useCases'
@@ -650,7 +657,7 @@ const Marketplace = () => {
                                             </li>
                                         )
                                     }}
-                                    renderInput={(params) => <TextField {...params} label='Usecases' />}
+                                    renderInput={(params) => <TextField {...params} label={t('marketplaceUsecases')} />}
                                     sx={{
                                         width: 300
                                     }}
@@ -791,10 +798,10 @@ const Marketplace = () => {
                                                 <img
                                                     style={{ objectFit: 'cover', height: '25vh', width: 'auto' }}
                                                     src={WorkflowEmptySVG}
-                                                    alt='WorkflowEmptySVG'
+                                                    alt={t('marketplaceWorkflowEmpty')}
                                                 />
                                             </Box>
-                                            <div>No Marketplace Yet</div>
+                                            <div>{t('marketplaceNoMarketplaceYet')}</div>
                                         </Stack>
                                     )}
                             </TabPanel>
@@ -835,7 +842,7 @@ const Marketplace = () => {
                                         onClick={() => clearAllUsecases()}
                                         startIcon={<IconX />}
                                     >
-                                        Clear All
+                                        {t('marketplaceClearAll')}
                                     </Button>
                                 )}
                                 {!view || view === 'card' ? (
@@ -927,7 +934,7 @@ const Marketplace = () => {
                                                 alt='WorkflowEmptySVG'
                                             />
                                         </Box>
-                                        <div>No Saved Custom Templates</div>
+                                        <div>{t('marketplaceNoSavedTemplates')}</div>
                                     </Stack>
                                 )}
                             </TabPanel>

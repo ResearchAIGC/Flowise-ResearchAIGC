@@ -12,6 +12,7 @@ import LoadAssistantDialog from './LoadAssistantDialog'
 import ViewHeader from '@/layout/MainLayout/ViewHeader'
 import ErrorBoundary from '@/ErrorBoundary'
 import { PermissionButton, StyledPermissionButton } from '@/ui-component/button/RBACButtons'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // API
 import assistantsApi from '@/api/assistants'
@@ -28,6 +29,7 @@ import { gridSpacing } from '@/store/constant'
 
 const OpenAIAssistantLayout = () => {
     const navigate = useNavigate()
+    const { t } = useLanguage()
 
     const getAllAssistantsApi = useApi(assistantsApi.getAllAssistants)
 
@@ -40,7 +42,7 @@ const OpenAIAssistantLayout = () => {
 
     const loadExisting = () => {
         const dialogProp = {
-            title: 'Load Existing Assistant'
+            title: t('loadExistingAssistant')
         }
         setLoadDialogProps(dialogProp)
         setShowLoadDialog(true)
@@ -58,10 +60,10 @@ const OpenAIAssistantLayout = () => {
 
     const addNew = (selectedOpenAIAssistantId, credential) => {
         const dialogProp = {
-            title: 'Add New Assistant',
+            title: t('addNewAssistant'),
             type: 'ADD',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Add',
+            cancelButtonName: t('cancel'),
+            confirmButtonName: t('addNew'),
             selectedOpenAIAssistantId,
             credential
         }
@@ -71,10 +73,10 @@ const OpenAIAssistantLayout = () => {
 
     const edit = (selectedAssistant) => {
         const dialogProp = {
-            title: 'Edit Assistant',
+            title: t('editAssistant'),
             type: 'EDIT',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Save',
+            cancelButtonName: t('cancel'),
+            confirmButtonName: t('save'),
             data: selectedAssistant
         }
         setDialogProps(dialogProp)
@@ -118,9 +120,9 @@ const OpenAIAssistantLayout = () => {
                             isBackButton={true}
                             onSearchChange={onSearchChange}
                             search={true}
-                            searchPlaceholder='Search Assistants'
-                            title='OpenAI Assistant'
-                            description='Create assistants using OpenAI Assistant API'
+                            searchPlaceholder={t('searchAssistants')}
+                            title={t('openaiAssistant')}
+                            description={t('openaiAssistantDescription')}
                             onBack={() => navigate(-1)}
                         >
                             <PermissionButton
@@ -130,7 +132,7 @@ const OpenAIAssistantLayout = () => {
                                 startIcon={<IconFileUpload />}
                                 sx={{ borderRadius: 2, height: 40 }}
                             >
-                                Load
+                                 {t('load')}
                             </PermissionButton>
                             <StyledPermissionButton
                                 permissionId={'assistants:create'}
@@ -139,7 +141,7 @@ const OpenAIAssistantLayout = () => {
                                 onClick={addNew}
                                 startIcon={<IconPlus />}
                             >
-                                Add
+                                {t('addNew')}
                             </StyledPermissionButton>
                         </ViewHeader>
                         {isLoading ? (
@@ -173,7 +175,7 @@ const OpenAIAssistantLayout = () => {
                                         alt='AssistantEmptySVG'
                                     />
                                 </Box>
-                                <div>No OpenAI Assistants Added Yet</div>
+                               <div>{t('noOpenaiAssistantsYet')}</div>
                             </Stack>
                         )}
                     </Stack>

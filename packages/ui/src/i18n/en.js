@@ -134,5 +134,24 @@ export default {
   cancelEdit: 'Cancel',
   toggleSnapping: 'toggle snapping',
   editNote: 'Edit',
-  parameters: 'Parameters'
+  parameters: 'Parameters',
+
+   // Assistants related
+  customAssistant: 'Custom Assistant',
+  customAssistantDescription: 'Create custom assistant using your choice of LLMs',
+  openaiAssistant: 'OpenAI Assistant',
+  openaiAssistantDescription: 'Create assistant using OpenAI Assistant API',
+  azureAssistantComingSoon: 'Azure Assistant (Coming Soon)',
+  azureAssistantDescription: 'Create assistant using Azure Assistant API',
+  assistantsPageTitle: 'Assistants',
+  assistantsPageDescription: 'Chat assistants with instructions, tools, and files to respond to user queries',
+  underDevelopment: 'Under Development',
+  loadExistingAssistant: 'Load Existing Assistant',
+  addNewAssistant: 'Add New Assistant',
+  editAssistant: 'Edit Assistant',
+  searchAssistants: 'Search Assistants',
+  noOpenaiAssistantsYet: 'No OpenAI Assistants Added Yet',
+  noCustomAssistantsYet: 'No Custom Assistants Added Yet',
+  newCustomAssistantCreated: 'New Custom Assistant created.',
+  failedToAddAssistant: 'Failed to add new Custom Assistant:'
 }

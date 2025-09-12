@@ -16,6 +16,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Box, Typogra
 // Project imports
 import { StyledButton } from '@/ui-component/button/StyledButton'
 import ConfirmDialog from '@/ui-component/dialog/ConfirmDialog'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // Icons
 import { IconX, IconFiles } from '@tabler/icons-react'
@@ -28,6 +29,7 @@ import useNotifier from '@/utils/useNotifier'
 
 const AddCustomAssistantDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
     const portalElement = document.getElementById('portal')
+    const { t } = useLanguage()
 
     const dispatch = useDispatch()
 
@@ -58,7 +60,7 @@ const AddCustomAssistantDialog = ({ show, dialogProps, onCancel, onConfirm }) =>
             const createResp = await assistantsApi.createNewAssistant(obj)
             if (createResp.data) {
                 enqueueSnackbar({
-                    message: 'New Custom Assistant created.',
+                    message: t('newCustomAssistantCreated'),
                     options: {
                         key: new Date().getTime() + Math.random(),
                         variant: 'success',
@@ -73,7 +75,7 @@ const AddCustomAssistantDialog = ({ show, dialogProps, onCancel, onConfirm }) =>
             }
         } catch (err) {
             enqueueSnackbar({
-                message: `Failed to add new Custom Assistant: ${
+                message: `${t('failedToAddAssistant')} ${
                     typeof err.response.data === 'object' ? err.response.data.message : err.response.data
                 }`,
                 options: {
@@ -110,7 +112,7 @@ const AddCustomAssistantDialog = ({ show, dialogProps, onCancel, onConfirm }) =>
                 <Box sx={{ p: 2 }}>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <Typography>
-                            Name<span style={{ color: 'red' }}>&nbsp;*</span>
+                            {t('name')}<span style={{ color: 'red' }}>&nbsp;*</span>
                         </Typography>
 
                         <div style={{ flexGrow: 1 }}></div>

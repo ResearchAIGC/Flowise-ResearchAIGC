@@ -134,5 +134,24 @@ export default {
   cancelEdit: '取消',
   toggleSnapping: '切换对齐',
   editNote: '编辑',
-  parameters: '参数'
+  parameters: '参数',
+
+  // Assistants相关
+  customAssistant: '自定义助手',
+  customAssistantDescription: '使用您选择的LLM创建自定义助手',
+  openaiAssistant: 'OpenAI助手',
+  openaiAssistantDescription: '使用OpenAI助手API创建助手',
+  azureAssistantComingSoon: 'Azure助手（即将推出）',
+  azureAssistantDescription: '使用Azure助手API创建助手',
+  assistantsPageTitle: '智能助手',
+  assistantsPageDescription: '带有指令、工具和文件的聊天助手，用于响应用户查询',
+  underDevelopment: '开发中',
+  loadExistingAssistant: '加载现有助手',
+  addNewAssistant: '添加新助手',
+  editAssistant: '编辑助手',
+  searchAssistants: '搜索助手',
+  noOpenaiAssistantsYet: '暂无OpenAI助手',
+  noCustomAssistantsYet: '暂无自定义助手',
+  newCustomAssistantCreated: '新的自定义助手已创建。',
+  failedToAddAssistant: '添加新自定义助手失败：'
 }

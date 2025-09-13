@@ -274,5 +274,56 @@ export default {
     staticVariableDescription: 'If variable type is Static, the value will be retrieved as it is. If variable type is Runtime, the value will be retrieved from .env file.',
     overrideConfigDescription: 'You can also override variable values in API overrideConfig using',
     readMoreDocs: 'Read more from docs'
+  },
+  // APIKeys相关
+  apikey: {
+    title: 'API Keys',
+    description: 'Flowise API & SDK authentication keys',
+    searchPlaceholder: 'Search API Keys',
+    noApiKeysYet: 'No API Keys Yet',
+    addNewApiKey: 'Add New API Key',
+    editApiKey: 'Edit API Key',
+    deleteApiKey: 'Delete API Key',
+    keyName: 'Key Name',
+    apiKey: 'API Key',
+    usage: 'Usage',
+    updated: 'Updated',
+    newApiKeyAdded: 'New API key added',
+    failedToAddApiKey: 'Failed to add new API key:',
+    apiKeySaved: 'API Key saved',
+    failedToSaveApiKey: 'Failed to save API key:',
+    apiKeyDeleted: 'API key deleted',
+    failedToDeleteApiKey: 'Failed to delete API key:',
+    createKey: 'Create Key',
+    import: 'Import',
+    copied: 'Copied!',
+    deleteConfirm: 'Delete key',
+    deleteConfirmWithUsage: 'Delete key. There are {count} chatflows using this key.'
+  },
+  importJsonFile: {
+    title: 'Import API Keys',
+    fileLabel: 'Import api.json file',
+    filePlaceholder: 'Choose a file to upload',
+    importMode: 'Import Mode',
+    importModeOptions: {
+      overwriteIfExist: {
+        label: 'Add & Overwrite',
+        description: 'Add keys and overwrite existing keys with the same name'
+      },
+      ignoreIfExist: {
+        label: 'Add & Ignore',
+        description: 'Add keys and ignore existing keys with the same name'
+      },
+      errorIfExist: {
+        label: 'Add & Verify',
+        description: 'Add Keys and throw error if key with same name exists'
+      },
+      replaceAll: {
+        label: 'Replace All',
+        description: 'Replace all keys with the imported keys'
+      }
+    },
+    importedSuccessfully: 'Imported keys successfully!',
+    failedToImport: 'Failed to import keys:'
   }
 }

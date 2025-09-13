@@ -1,8 +1,10 @@
-import * as PropTypes from 'prop-types'
 import moment from 'moment/moment'
+import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { enqueueSnackbar as enqueueSnackbarAction, closeSnackbar as closeSnackbarAction } from '@/store/actions'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // material-ui
 import {
@@ -100,10 +102,10 @@ function APIKeyRow(props) {
                         : `${props.apiKey.apiKey.substring(0, 2)}${'•'.repeat(18)}${props.apiKey.apiKey.substring(
                               props.apiKey.apiKey.length - 5
                           )}`}
-                    <IconButton title='Copy' color='success' onClick={props.onCopyClick}>
+                    <IconButton title={props.t('apikey.copied')} color='success' onClick={props.onCopyClick}>
                         <IconCopy />
                     </IconButton>
-                    <IconButton title='Show' color='inherit' onClick={props.onShowAPIClick}>
+                    <IconButton title={props.t('apikey.apiKey')} color='inherit' onClick={props.onShowAPIClick}>
                         {props.showApiKeys.includes(props.apiKey.apiKey) ? <IconEyeOff /> : <IconEye />}
                     </IconButton>
                     <Popover
@@ -120,7 +122,7 @@ function APIKeyRow(props) {
                         }}
                     >
                         <Typography variant='h6' sx={{ pl: 1, pr: 1, color: 'white', background: props.theme.palette.success.dark }}>
-                            Copied!
+                            {props.t('apikey.copied')}
                         </Typography>
                     </Popover>
                 </StyledTableCell>
@@ -135,14 +137,14 @@ function APIKeyRow(props) {
                 <StyledTableCell>{moment(props.apiKey.createdAt).format('MMMM Do, YYYY')}</StyledTableCell>
                 <Available permission={'apikeys:update,apikeys:create'}>
                     <StyledTableCell>
-                        <IconButton title='Edit' color='primary' onClick={props.onEditClick}>
+                        <IconButton title={props.t('apikey.editApiKey')} color='primary' onClick={props.onEditClick}>
                             <IconEdit />
                         </IconButton>
                     </StyledTableCell>
                 </Available>
                 <Available permission={'apikeys:delete'}>
                     <StyledTableCell>
-                        <IconButton title='Delete' color='error' onClick={props.onDeleteClick}>
+                        <IconButton title={props.t('apikey.deleteApiKey')} color='error' onClick={props.onDeleteClick}>
                             <IconTrash />
                         </IconButton>
                     </StyledTableCell>
@@ -198,11 +200,14 @@ APIKeyRow.propTypes = {
     onClose: PropTypes.func,
     theme: PropTypes.any,
     onEditClick: PropTypes.func,
-    onDeleteClick: PropTypes.func
+    onDeleteClick: PropTypes.func,
+    t: PropTypes.func
 }
+
 const APIKey = () => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     const dispatch = useDispatch()
     useNotifier()
@@ -273,10 +278,10 @@ const APIKey = () => {
 
     const addNew = () => {
         const dialogProp = {
-            title: 'Add New API Key',
+            title: t('apikey.addNewApiKey'),
             type: 'ADD',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Add',
+            cancelButtonName: t('cancel'),
+            confirmButtonName: t('addNew'),
             customBtnId: 'btn_confirmAddingApiKey'
         }
         setDialogProps(dialogProp)
@@ -285,10 +290,10 @@ const APIKey = () => {
 
     const edit = (key) => {
         const dialogProp = {
-            title: 'Edit API Key',
+            title: t('apikey.editApiKey'),
             type: 'EDIT',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Save',
+            cancelButtonName: t('cancel'),
+            confirmButtonName: t('save'),
             customBtnId: 'btn_confirmEditingApiKey',
             key
         }
@@ -299,8 +304,8 @@ const APIKey = () => {
     const uploadDialog = () => {
         const dialogProp = {
             type: 'ADD',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Upload',
+            cancelButtonName: t('cancel'),
+            confirmButtonName: t('apikey.import'),
             data: {}
         }
         setUploadDialogProps(dialogProp)
@@ -309,13 +314,13 @@ const APIKey = () => {
 
     const deleteKey = async (key) => {
         const confirmPayload = {
-            title: `Delete`,
+            title: t('apikey.deleteConfirm'),
             description:
                 key.chatFlows.length === 0
                     ? `Delete key [${key.keyName}] ? `
-                    : `Delete key [${key.keyName}] ?\n There are ${key.chatFlows.length} chatflows using this key.`,
-            confirmButtonName: 'Delete',
-            cancelButtonName: 'Cancel',
+                    : t('apikey.deleteConfirmWithUsage', { count: key.chatFlows.length }),
+            confirmButtonName: t('apikey.deleteApiKey'),
+            cancelButtonName: t('cancel'),
             customBtnId: 'btn_initiateDeleteApiKey'
         }
         const isConfirmed = await confirm(confirmPayload)
@@ -325,7 +330,7 @@ const APIKey = () => {
                 const deleteResp = await apiKeyApi.deleteAPI(key.id)
                 if (deleteResp.data) {
                     enqueueSnackbar({
-                        message: 'API key deleted',
+                        message: t('apikey.apiKeyDeleted'),
                         options: {
                             key: new Date().getTime() + Math.random(),
                             variant: 'success',
@@ -340,7 +345,7 @@ const APIKey = () => {
                 }
             } catch (error) {
                 enqueueSnackbar({
-                    message: `Failed to delete API key: ${
+                    message: `${t('apikey.failedToDeleteApiKey')} ${
                         typeof error.response.data === 'object' ? error.response.data.message : error.response.data
                     }`,
                     options: {
@@ -363,6 +368,11 @@ const APIKey = () => {
         setShowDialog(false)
         setShowUploadDialog(false)
         refresh(currentPage, pageLimit)
+    }
+
+    const onCancel = () => {
+        setShowDialog(false)
+        setShowUploadDialog(false)
     }
 
     useEffect(() => {
@@ -391,9 +401,9 @@ const APIKey = () => {
                         <ViewHeader
                             onSearchChange={onSearchChange}
                             search={true}
-                            searchPlaceholder='Search API Keys'
-                            title='API Keys'
-                            description='Flowise API & SDK authentication keys'
+                            searchPlaceholder={t('apikey.searchPlaceholder')}
+                            title={t('apikey.title')}
+                            description={t('apikey.description')}
                         >
                             <PermissionButton
                                 permissionId={'apikeys:import'}
@@ -403,7 +413,7 @@ const APIKey = () => {
                                 startIcon={<IconFileUpload />}
                                 id='btn_importApiKeys'
                             >
-                                Import
+                                {t('apikey.import')}
                             </PermissionButton>
                             <StyledPermissionButton
                                 permissionId={'apikeys:create'}
@@ -413,7 +423,7 @@ const APIKey = () => {
                                 startIcon={<IconPlus />}
                                 id='btn_createApiKey'
                             >
-                                Create Key
+                                {t('apikey.createKey')}
                             </StyledPermissionButton>
                         </ViewHeader>
                         {!isLoading && apiKeys?.length <= 0 ? (
@@ -425,7 +435,7 @@ const APIKey = () => {
                                         alt='APIEmptySVG'
                                     />
                                 </Box>
-                                <div>No API Keys Yet</div>
+                                <div>{t('apikey.noApiKeysYet')}</div>
                             </Stack>
                         ) : (
                             <>
@@ -443,10 +453,10 @@ const APIKey = () => {
                                             }}
                                         >
                                             <TableRow>
-                                                <StyledTableCell>Key Name</StyledTableCell>
-                                                <StyledTableCell>API Key</StyledTableCell>
-                                                <StyledTableCell>Usage</StyledTableCell>
-                                                <StyledTableCell>Updated</StyledTableCell>
+                                                <StyledTableCell>{t('apikey.keyName')}</StyledTableCell>
+                                                <StyledTableCell>{t('apikey.apiKey')}</StyledTableCell>
+                                                <StyledTableCell>{t('apikey.usage')}</StyledTableCell>
+                                                <StyledTableCell>{t('apikey.updated')}</StyledTableCell>
                                                 <Available permission={'apikeys:update,apikeys:create'}>
                                                     <StyledTableCell> </StyledTableCell>
                                                 </Available>
@@ -520,6 +530,7 @@ const APIKey = () => {
                                                             theme={theme}
                                                             onEditClick={() => edit(key)}
                                                             onDeleteClick={() => deleteKey(key)}
+                                                            t={t}
                                                         />
                                                     ))}
                                                 </>
@@ -537,7 +548,7 @@ const APIKey = () => {
             <APIKeyDialog
                 show={showDialog}
                 dialogProps={dialogProps}
-                onCancel={() => setShowDialog(false)}
+                onCancel={onCancel}
                 onConfirm={onConfirm}
                 setError={setError}
             ></APIKeyDialog>
@@ -545,7 +556,7 @@ const APIKey = () => {
                 <UploadJSONFileDialog
                     show={showUploadDialog}
                     dialogProps={uploadDialogProps}
-                    onCancel={() => setShowUploadDialog(false)}
+                    onCancel={onCancel}
                     onConfirm={onConfirm}
                 ></UploadJSONFileDialog>
             )}

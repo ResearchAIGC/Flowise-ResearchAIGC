@@ -274,5 +274,56 @@ export default {
     staticVariableDescription: '如果变量类型是静态的，值将按原样检索。如果变量类型是运行时的，值将从.env文件中检索。',
     overrideConfigDescription: '您还可以在API overrideConfig中使用',
     readMoreDocs: '从文档中了解更多'
+  },
+  // APIKeys相关
+  apikey: {
+    title: 'API密钥',
+    description: 'Flowise API & SDK 认证密钥',
+    searchPlaceholder: '搜索API密钥',
+    noApiKeysYet: '暂无API密钥',
+    addNewApiKey: '添加新API密钥',
+    editApiKey: '编辑API密钥',
+    deleteApiKey: '删除API密钥',
+    keyName: '密钥名称',
+    apiKey: 'API密钥',
+    usage: '使用情况',
+    updated: '更新时间',
+    newApiKeyAdded: '已添加新API密钥',
+    failedToAddApiKey: '添加新API密钥失败:',
+    apiKeySaved: 'API密钥已保存',
+    failedToSaveApiKey: '保存API密钥失败:',
+    apiKeyDeleted: 'API密钥已删除',
+    failedToDeleteApiKey: '删除API密钥失败:',
+    createKey: '创建密钥',
+    import: '导入',
+    copied: '已复制!',
+    deleteConfirm: '删除密钥',
+    deleteConfirmWithUsage: '删除密钥。当前有{count}个聊天流程正在使用此密钥。'
+  },
+  importJsonFile: {
+    title: '导入API密钥',
+    fileLabel: '导入api.json文件',
+    filePlaceholder: '选择要上传的文件',
+    importMode: '导入模式',
+    importModeOptions: {
+      overwriteIfExist: {
+        label: '添加并覆盖',
+        description: '添加密钥并覆盖同名的现有密钥'
+      },
+      ignoreIfExist: {
+        label: '添加并忽略',
+        description: '添加密钥并忽略同名的现有密钥'
+      },
+      errorIfExist: {
+        label: '添加并验证',
+        description: '添加密钥，如果同名密钥已存在则抛出错误'
+      },
+      replaceAll: {
+        label: '替换全部',
+        description: '用导入的密钥替换所有现有密钥'
+      }
+    },
+    importedSuccessfully: '密钥导入成功!',
+    failedToImport: '密钥导入失败:'
   }
 }

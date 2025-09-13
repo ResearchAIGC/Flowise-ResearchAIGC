@@ -215,5 +215,64 @@ export default {
     flowConfig: '您可以获取默认流程配置：',
     customVariables: '您可以获取自定义变量：',
     returnString: '函数末尾必须返回一个字符串值'
+  },
+
+  // Credentials相关
+  credentials: {
+    title: '凭证',
+    description: '第三方集成的API密钥、令牌和密钥',
+    searchPlaceholder: '搜索凭证',
+    addButton: '添加凭证',
+    noCredentialsYet: '暂无凭证',
+    nameColumn: '名称',
+    lastUpdatedColumn: '最后更新',
+    createdColumn: '创建时间',
+    sharedCredential: '已共享凭证',
+    deleteTitle: '删除',
+    deleteConfirm: '删除凭证',
+    deleteSuccess: '凭证已删除',
+    deleteFailed: '删除凭证失败:',
+    cancelButton: '取消',
+    confirmButton: '确认',
+    saveButton: '保存',
+    shareButton: '共享',
+    editButton: '编辑'
+  },
+  // Variables相关
+  variables: {
+    title: '变量',
+    description: '创建和管理全局变量',
+    searchPlaceholder: '搜索变量',
+    addButton: '添加变量',
+    noVariablesYet: '暂无变量',
+    nameColumn: '名称',
+    valueColumn: '值',
+    typeColumn: '类型',
+    lastUpdatedColumn: '最后更新',
+    createdColumn: '创建时间',
+    addVariable: '添加变量',
+    editVariable: '编辑变量',
+    deleteVariable: '删除变量',
+    variableName: '变量名称',
+    variableType: '类型',
+    variableValue: '值',
+    staticType: '静态',
+    staticTypeDescription: '变量值将从下面输入的值中读取',
+    runtimeType: '运行时',
+    runtimeTypeDescription: '变量值将从.env文件中读取',
+    newVariableAdded: '已添加新变量',
+    failedToAddVariable: '添加新变量失败:',
+    variableSaved: '变量已保存',
+    failedToSaveVariable: '保存变量失败:',
+    variableDeleted: '变量已删除',
+    failedToDeleteVariable: '删除变量失败:'
+  },
+  howToUseVariables: {
+    title: '如何使用变量',
+    usageDescription: '变量可以在自定义工具、自定义函数、自定义加载器、条件函数中使用，带有$前缀。',
+    textFieldUsage: '变量也可以在任何节点的文本字段参数中使用。例如，在智能体的系统消息中：',
+    staticVariableDescription: '如果变量类型是静态的，值将按原样检索。如果变量类型是运行时的，值将从.env文件中检索。',
+    overrideConfigDescription: '您还可以在API overrideConfig中使用',
+    readMoreDocs: '从文档中了解更多'
   }
 }

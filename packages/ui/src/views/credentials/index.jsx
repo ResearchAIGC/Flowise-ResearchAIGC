@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { enqueueSnackbar as enqueueSnackbarAction, closeSnackbar as closeSnackbarAction } from '@/store/actions'
 import moment from 'moment'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // material-ui
 import { styled } from '@mui/material/styles'
@@ -76,6 +77,8 @@ const StyledTableRow = styled(TableRow)(() => ({
 const Credentials = () => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage() // 获取翻译函数
+
     const dispatch = useDispatch()
     useNotifier()
     const { error, setError } = useError()
@@ -109,7 +112,7 @@ const Credentials = () => {
 
     const listCredential = () => {
         const dialogProp = {
-            title: 'Add New Credential',
+            title: t('credentials.addButton'),
             componentsCredentials
         }
         setCredentialListDialogProps(dialogProp)
@@ -119,8 +122,8 @@ const Credentials = () => {
     const addNew = (credentialComponent) => {
         const dialogProp = {
             type: 'ADD',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Add',
+            cancelButtonName: t('credentials.cancelButton'),
+            confirmButtonName: t('credentials.addButton'),
             credentialComponent
         }
         setSpecificCredentialDialogProps(dialogProp)
@@ -130,8 +133,8 @@ const Credentials = () => {
     const edit = (credential) => {
         const dialogProp = {
             type: 'EDIT',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Save',
+            cancelButtonName: t('credentials.cancelButton'),
+            confirmButtonName: t('credentials.saveButton'),
             data: credential
         }
         setSpecificCredentialDialogProps(dialogProp)
@@ -141,12 +144,12 @@ const Credentials = () => {
     const share = (credential) => {
         const dialogProps = {
             type: 'EDIT',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Share',
+            cancelButtonName: t('credentials.cancelButton'),
+            confirmButtonName: t('credentials.shareButton'),
             data: {
                 id: credential.id,
                 name: credential.name,
-                title: 'Share Credential',
+                title: t('credentials.shareButton'),
                 itemType: 'credential'
             }
         }
@@ -156,10 +159,10 @@ const Credentials = () => {
 
     const deleteCredential = async (credential) => {
         const confirmPayload = {
-            title: `Delete`,
-            description: `Delete credential ${credential.name}?`,
-            confirmButtonName: 'Delete',
-            cancelButtonName: 'Cancel'
+            title: t('credentials.deleteTitle'),
+            description: `${t('credentials.deleteConfirm')} ${credential.name}?`,
+            confirmButtonName: t('credentials.deleteTitle'),
+            cancelButtonName: t('credentials.cancelButton')
         }
         const isConfirmed = await confirm(confirmPayload)
 
@@ -168,7 +171,7 @@ const Credentials = () => {
                 const deleteResp = await credentialsApi.deleteCredential(credential.id)
                 if (deleteResp.data) {
                     enqueueSnackbar({
-                        message: 'Credential deleted',
+                        message: t('credentials.deleteSuccess'),
                         options: {
                             key: new Date().getTime() + Math.random(),
                             variant: 'success',
@@ -183,7 +186,7 @@ const Credentials = () => {
                 }
             } catch (error) {
                 enqueueSnackbar({
-                    message: `Failed to delete Credential: ${
+                    message: `${t('credentials.deleteFailed')} ${
                         typeof error.response.data === 'object' ? error.response.data.message : error.response.data
                     }`,
                     options: {
@@ -245,9 +248,9 @@ const Credentials = () => {
                         <ViewHeader
                             onSearchChange={onSearchChange}
                             search={true}
-                            searchPlaceholder='Search Credentials'
-                            title='Credentials'
-                            description='API keys, tokens, and secrets for 3rd party integrations'
+                            searchPlaceholder={t('credentials.searchPlaceholder')}
+                            title={t('credentials.title')}
+                            description={t('credentials.description')}
                         >
                             <StyledPermissionButton
                                 permissionId='credentials:create'
@@ -256,7 +259,7 @@ const Credentials = () => {
                                 onClick={listCredential}
                                 startIcon={<IconPlus />}
                             >
-                                Add Credential
+                                {t('credentials.addButton')}
                             </StyledPermissionButton>
                         </ViewHeader>
                         {!isLoading && credentials.length <= 0 ? (
@@ -268,7 +271,7 @@ const Credentials = () => {
                                         alt='CredentialEmptySVG'
                                     />
                                 </Box>
-                                <div>No Credentials Yet</div>
+                                <div>{t('credentials.noCredentialsYet')}</div>
                             </Stack>
                         ) : (
                             <TableContainer
@@ -285,9 +288,9 @@ const Credentials = () => {
                                         }}
                                     >
                                         <TableRow>
-                                            <StyledTableCell>Name</StyledTableCell>
-                                            <StyledTableCell>Last Updated</StyledTableCell>
-                                            <StyledTableCell>Created</StyledTableCell>
+                                            <StyledTableCell>{t('credentials.nameColumn')}</StyledTableCell>
+                                            <StyledTableCell>{t('credentials.lastUpdatedColumn')}</StyledTableCell>
+                                            <StyledTableCell>{t('credentials.createdColumn')}</StyledTableCell>
                                             <StyledTableCell style={{ width: '5%' }}> </StyledTableCell>
                                             <StyledTableCell style={{ width: '5%' }}> </StyledTableCell>
                                             <StyledTableCell style={{ width: '5%' }}> </StyledTableCell>
@@ -390,8 +393,8 @@ const Credentials = () => {
                                                                 <StyledTableCell>
                                                                     <PermissionIconButton
                                                                         permissionId={'credentials:share'}
-                                                                        display={'feat:workspaces'}
-                                                                        title='Share'
+                                                                        display={['feat:workspaces']}
+                                                                        title={t('credentials.shareButton')}
                                                                         color='primary'
                                                                         onClick={() => share(credential)}
                                                                     >
@@ -401,7 +404,7 @@ const Credentials = () => {
                                                                 <StyledTableCell>
                                                                     <PermissionIconButton
                                                                         permissionId={'credentials:create,credentials:update'}
-                                                                        title='Edit'
+                                                                        title={t('credentials.editButton')}
                                                                         color='primary'
                                                                         onClick={() => edit(credential)}
                                                                     >
@@ -411,7 +414,7 @@ const Credentials = () => {
                                                                 <StyledTableCell>
                                                                     <PermissionIconButton
                                                                         permissionId={'credentials:delete'}
-                                                                        title='Delete'
+                                                                        title={t('credentials.deleteTitle')}
                                                                         color='error'
                                                                         onClick={() => deleteCredential(credential)}
                                                                     >
@@ -422,7 +425,7 @@ const Credentials = () => {
                                                         )}
                                                         {credential.shared && (
                                                             <>
-                                                                <StyledTableCell colSpan={'3'}>Shared Credential</StyledTableCell>
+                                                                <StyledTableCell colSpan={'3'}>{t('credentials.sharedCredential')}</StyledTableCell>
                                                             </>
                                                         )}
                                                     </StyledTableRow>

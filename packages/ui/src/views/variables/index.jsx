@@ -41,6 +41,7 @@ import variablesApi from '@/api/variables'
 // Hooks
 import useApi from '@/hooks/useApi'
 import useConfirm from '@/hooks/useConfirm'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // utils
 import useNotifier from '@/utils/useNotifier'
@@ -76,6 +77,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 const Variables = () => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
     const dispatch = useDispatch()
     useNotifier()
     const { error, setError } = useError()
@@ -145,10 +147,10 @@ const Variables = () => {
 
     const deleteVariable = async (variable) => {
         const confirmPayload = {
-            title: `Delete`,
-            description: `Delete variable ${variable.name}?`,
-            confirmButtonName: 'Delete',
-            cancelButtonName: 'Cancel'
+            title: t('variables.deleteTitle', 'Delete'),
+            description: `${t('variables.deleteConfirm', 'Delete variable')} ${variable.name}?`,
+            confirmButtonName: t('delete', 'Delete'),
+            cancelButtonName: t('cancel', 'Cancel')
         }
         const isConfirmed = await confirm(confirmPayload)
 
@@ -157,7 +159,7 @@ const Variables = () => {
                 const deleteResp = await variablesApi.deleteVariable(variable.id)
                 if (deleteResp.data) {
                     enqueueSnackbar({
-                        message: 'Variable deleted',
+                        message: t('variables.variableDeleted'),
                         options: {
                             key: new Date().getTime() + Math.random(),
                             variant: 'success',
@@ -222,12 +224,12 @@ const Variables = () => {
                         <ViewHeader
                             onSearchChange={onSearchChange}
                             search={true}
-                            searchPlaceholder='Search Variables'
-                            title='Variables'
-                            description='Create and manage global variables'
+                            searchPlaceholder={t('variables.searchPlaceholder')}
+                            title={t('variables.title')}
+                            description={t('variables.description')}
                         >
                             <Button variant='outlined' sx={{ borderRadius: 2, height: '100%' }} onClick={() => setShowHowToDialog(true)}>
-                                How To Use
+                                {t('howToUseVariables.title')}
                             </Button>
                             <StyledPermissionButton
                                 permissionId={'variables:create'}
@@ -237,7 +239,7 @@ const Variables = () => {
                                 startIcon={<IconPlus />}
                                 id='btn_createVariable'
                             >
-                                Add Variable
+                                {t('variables.addButton')}
                             </StyledPermissionButton>
                         </ViewHeader>
                         {!isLoading && variables.length === 0 ? (
@@ -249,7 +251,7 @@ const Variables = () => {
                                         alt='VariablesEmptySVG'
                                     />
                                 </Box>
-                                <div>No Variables Yet</div>
+                                <div>{t('variables.noVariablesYet')}</div>
                             </Stack>
                         ) : (
                             <>
@@ -267,11 +269,11 @@ const Variables = () => {
                                             }}
                                         >
                                             <TableRow>
-                                                <StyledTableCell>Name</StyledTableCell>
-                                                <StyledTableCell>Value</StyledTableCell>
-                                                <StyledTableCell>Type</StyledTableCell>
-                                                <StyledTableCell>Last Updated</StyledTableCell>
-                                                <StyledTableCell>Created</StyledTableCell>
+                                                <StyledTableCell>{t('variables.nameColumn')}</StyledTableCell>
+                                                <StyledTableCell>{t('variables.valueColumn')}</StyledTableCell>
+                                                <StyledTableCell>{t('variables.typeColumn')}</StyledTableCell>
+                                                <StyledTableCell>{t('variables.lastUpdatedColumn')}</StyledTableCell>
+                                                <StyledTableCell>{t('variables.createdColumn')}</StyledTableCell>
                                                 <Available permissionId={'variables:update'}>
                                                     <StyledTableCell> </StyledTableCell>
                                                 </Available>

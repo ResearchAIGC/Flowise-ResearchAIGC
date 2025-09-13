@@ -120,7 +120,7 @@ const NavItem = ({ item, level, navType, onClick, onUploadFile }) => {
                         color='inherit'
                         sx={{ my: 0.5 }}
                     >
-                        {item.id === 'tools' ? t('tools.title') : t(item.id, item.title)}
+                                    {item.id === 'tools' ? t('tools.title') : item.id === 'credentials' ? t('credentials.title') : item.id === 'variables' ? t('variables.title') : t(item.id, item.title)}
                     </Typography>
                 }
                 secondary={

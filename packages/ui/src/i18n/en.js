@@ -215,5 +215,64 @@ export default {
     flowConfig: 'You can get default flow config:',
     customVariables: 'You can get custom variables:',
     returnString: 'Must return a string value at the end of function'
+  },
+
+  // Credentials related
+  credentials: {
+    title: 'Credentials',
+    description: 'API keys, tokens, and secrets for 3rd party integrations',
+    searchPlaceholder: 'Search Credentials',
+    addButton: 'Add Credential',
+    noCredentialsYet: 'No Credentials Yet',
+    nameColumn: 'Name',
+    lastUpdatedColumn: 'Last Updated',
+    createdColumn: 'Created',
+    sharedCredential: 'Shared Credential',
+    deleteTitle: 'Delete',
+    deleteConfirm: 'Delete credential',
+    deleteSuccess: 'Credential deleted',
+    deleteFailed: 'Failed to delete Credential:',
+    cancelButton: 'Cancel',
+    confirmButton: 'Confirm',
+    saveButton: 'Save',
+    shareButton: 'Share',
+    editButton: 'Edit'
+  },
+  // Variables相关
+  variables: {
+    title: 'Variables',
+    description: 'Create and manage global variables',
+    searchPlaceholder: 'Search Variables',
+    addButton: 'Add Variable',
+    noVariablesYet: 'No Variables Yet',
+    nameColumn: 'Name',
+    valueColumn: 'Value',
+    typeColumn: 'Type',
+    lastUpdatedColumn: 'Last Updated',
+    createdColumn: 'Created',
+    addVariable: 'Add Variable',
+    editVariable: 'Edit Variable',
+    deleteVariable: 'Delete Variable',
+    variableName: 'Variable Name',
+    variableType: 'Type',
+    variableValue: 'Value',
+    staticType: 'Static',
+    staticTypeDescription: 'Variable value will be read from the value entered below',
+    runtimeType: 'Runtime',
+    runtimeTypeDescription: 'Variable value will be read from .env file',
+    newVariableAdded: 'New Variable added',
+    failedToAddVariable: 'Failed to add new Variable:',
+    variableSaved: 'Variable saved',
+    failedToSaveVariable: 'Failed to save Variable:',
+    variableDeleted: 'Variable deleted',
+    failedToDeleteVariable: 'Failed to delete Variable:'
+  },
+  howToUseVariables: {
+    title: 'How To Use Variables',
+    usageDescription: 'Variables can be used in Custom Tool, Custom Function, Custom Loader, If Else Function with the $ prefix.',
+    textFieldUsage: 'Variables can also be used in Text Field parameter of any node. For example, in System Message of Agent:',
+    staticVariableDescription: 'If variable type is Static, the value will be retrieved as it is. If variable type is Runtime, the value will be retrieved from .env file.',
+    overrideConfigDescription: 'You can also override variable values in API overrideConfig using',
+    readMoreDocs: 'Read more from docs'
   }
 }

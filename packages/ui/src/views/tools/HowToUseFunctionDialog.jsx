@@ -1,8 +1,10 @@
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 const HowToUseFunctionDialog = ({ show, onCancel }) => {
+    const { t } = useLanguage()
     const portalElement = document.getElementById('portal')
 
     const component = show ? (
@@ -15,24 +17,24 @@ const HowToUseFunctionDialog = ({ show, onCancel }) => {
             aria-describedby='alert-dialog-description'
         >
             <DialogTitle sx={{ fontSize: '1rem' }} id='alert-dialog-title'>
-                How To Use Function
+                {t('howToUseFunction.title')}
             </DialogTitle>
             <DialogContent>
                 <ul>
-                    <li style={{ marginTop: 10 }}>You can use any libraries imported in Flowise</li>
+                    <li style={{ marginTop: 10 }}>{t('howToUseFunction.libraryUse')}</li>
                     <li style={{ marginTop: 10 }}>
-                        You can use properties specified in Input Schema as variables with prefix $:
+                        {t('howToUseFunction.variableUse')}
                         <ul style={{ marginTop: 10 }}>
                             <li>
-                                Property = <code>userid</code>
+                                {t('howToUseFunction.propertyExample')} <code>userid</code>
                             </li>
                             <li>
-                                Variable = <code>$userid</code>
+                                {t('howToUseFunction.variableExample')} <code>$userid</code>
                             </li>
                         </ul>
                     </li>
                     <li style={{ marginTop: 10 }}>
-                        You can get default flow config:
+                        {t('howToUseFunction.flowConfig')}
                         <ul style={{ marginTop: 10 }}>
                             <li>
                                 <code>$flow.sessionId</code>
@@ -52,9 +54,9 @@ const HowToUseFunctionDialog = ({ show, onCancel }) => {
                         </ul>
                     </li>
                     <li style={{ marginTop: 10 }}>
-                        You can get custom variables:&nbsp;<code>{`$vars.<variable-name>`}</code>
+                        {t('howToUseFunction.customVariables')}&nbsp;<code>{`$vars.<variable-name>`}</code>
                     </li>
-                    <li style={{ marginTop: 10 }}>Must return a string value at the end of function</li>
+                    <li style={{ marginTop: 10 }}>{t('howToUseFunction.returnString')}</li>
                 </ul>
             </DialogContent>
         </Dialog>

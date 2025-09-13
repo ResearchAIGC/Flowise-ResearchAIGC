@@ -4,8 +4,10 @@ import { useState } from 'react'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import { StyledButton } from '@/ui-component/button/StyledButton'
 import { CodeEditor } from '@/ui-component/editor/CodeEditor'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 const PasteJSONDialog = ({ show, onCancel, onConfirm, customization }) => {
+    const { t } = useLanguage()
     const portalElement = document.getElementById('portal')
     const [jsonInput, setJsonInput] = useState('')
     const [error, setError] = useState('')
@@ -13,7 +15,7 @@ const PasteJSONDialog = ({ show, onCancel, onConfirm, customization }) => {
     const handleConfirm = () => {
         try {
             const parsedJSON = JSON.parse(jsonInput)
-            if (!Array.isArray(parsedJSON)) throw new Error('Input must be an array of properties')
+            if (!Array.isArray(parsedJSON)) throw new Error(t('tools.invalidJSON'))
             const formattedData = parsedJSON.map((item, index) => ({
                 id: index + 1,
                 property: item.property || '',
@@ -24,7 +26,7 @@ const PasteJSONDialog = ({ show, onCancel, onConfirm, customization }) => {
             onConfirm(formattedData)
             setError('')
         } catch (err) {
-            setError('Invalid JSON format. Please check your input.')
+            setError(t('tools.invalidJSON'))
         }
     }
 
@@ -46,12 +48,12 @@ const PasteJSONDialog = ({ show, onCancel, onConfirm, customization }) => {
     const component = show ? (
         <Dialog fullWidth maxWidth='md' open={show} onClose={onCancel} aria-labelledby='paste-json-dialog-title'>
             <DialogTitle sx={{ fontSize: '1rem' }} id='paste-json-dialog-title'>
-                Paste JSON Schema
+                {t('tools.pasteJSONSchema')}
             </DialogTitle>
             <DialogContent>
                 <Box sx={{ mt: 2 }}>
                     <Button variant='outlined' size='small' onClick={() => setJsonInput(exampleJSON)} sx={{ mb: 2 }}>
-                        See Example
+                        {t('tools.seeExample')}
                     </Button>
                     <CodeEditor
                         value={jsonInput}
@@ -66,9 +68,9 @@ const PasteJSONDialog = ({ show, onCancel, onConfirm, customization }) => {
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onCancel}>Cancel</Button>
+                <Button onClick={onCancel}>{t('tools.cancel')}</Button>
                 <StyledButton variant='contained' onClick={handleConfirm}>
-                    Confirm
+                    {t('tools.confirm') || 'Confirm'}
                 </StyledButton>
             </DialogActions>
         </Dialog>

@@ -30,7 +30,16 @@ export const LanguageProvider = ({ children }) => {
 
   // 翻译工具函数
   const t = (key, defaultText = key) => {
-    return translations[language]?.[key] || defaultText
+    // 支持点表示法的嵌套键查找
+    const keys = key.split('.')
+    let value = translations[language]
+    
+    for (const k of keys) {
+      if (value === undefined) break
+      value = value[k]
+    }
+    
+    return value !== undefined ? value : defaultText
   }
 
   return (

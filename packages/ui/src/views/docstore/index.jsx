@@ -19,6 +19,9 @@ import { StyledPermissionButton } from '@/ui-component/button/RBACButtons'
 import useApi from '@/hooks/useApi'
 import documentsApi from '@/api/documentstore'
 
+// 导入useLanguage hook
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // icons
 import { IconPlus, IconLayoutGrid, IconList } from '@tabler/icons-react'
 import doc_store_empty from '@/assets/images/doc_store_empty.svg'
@@ -31,7 +34,8 @@ import { DocumentStoreTable } from '@/ui-component/table/DocumentStoreTable'
 
 const Documents = () => {
     const theme = useTheme()
-
+    // 使用useLanguage hook获取t翻译函数
+    const { t } = useLanguage()
     const navigate = useNavigate()
     const getAllDocumentStores = useApi(documentsApi.getAllDocumentStores)
     const { error } = useError()
@@ -154,9 +158,9 @@ const Documents = () => {
                     <ViewHeader
                         onSearchChange={onSearchChange}
                         search={hasDocStores}
-                        searchPlaceholder='Search Name'
-                        title='Document Store'
-                        description='Store and upsert documents for LLM retrieval (RAG)'
+                        searchPlaceholder={t('searchPlaceholder')}
+                        title={t('document-stores')}
+                        description={t('docstore.description')}
                     >
                         {hasDocStores && (
                             <ToggleButtonGroup
@@ -174,7 +178,7 @@ const Documents = () => {
                                     }}
                                     variant='contained'
                                     value='card'
-                                    title='Card View'
+                                    title={t('docstore.cardView')}
                                 >
                                     <IconLayoutGrid />
                                 </ToggleButton>
@@ -186,7 +190,7 @@ const Documents = () => {
                                     }}
                                     variant='contained'
                                     value='list'
-                                    title='List View'
+                                    title={t('docstore.listView')}
                                 >
                                     <IconList />
                                 </ToggleButton>
@@ -200,7 +204,7 @@ const Documents = () => {
                             startIcon={<IconPlus />}
                             id='btn_createVariable'
                         >
-                            Add New
+                            {t('docstore.addNew')}
                         </StyledPermissionButton>
                     </ViewHeader>
                     {!hasDocStores ? (
@@ -212,7 +216,7 @@ const Documents = () => {
                                     alt='doc_store_empty'
                                 />
                             </Box>
-                            <div>No Document Stores Created Yet</div>
+                            <div>{t('docstore.noDocumentStores')}</div>
                         </Stack>
                     ) : (
                         <React.Fragment>

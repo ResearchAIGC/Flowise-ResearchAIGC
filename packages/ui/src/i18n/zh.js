@@ -406,5 +406,55 @@ export default {
     note: '注意',
     upsertApiNote: '只有当现有文档加载器之前已经上传过数据时，才能使用Upsert API',
     overrideExistingConfigurations: '您可以覆盖现有配置'
+  },
+  // Executions相关
+  executionDetails: {
+    // AgentExecutions页面
+    agentExecutions: '智能体执行记录',
+    monitorAndManageAgentflows: '监控和管理智能体流程执行',
+    state: '状态',
+    all: '全部',
+    inProgress: '进行中',
+    finished: '已完成',
+    error: '错误',
+    terminated: '已终止',
+    timeout: '超时',
+    stopped: '已停止',
+    startDate: '开始日期',
+    endDate: '结束日期',
+    agentflow: '智能体流程',
+    sessionId: '会话ID',
+    apply: '应用',
+    reset: '重置',
+    deleteSelectedExecutions: '删除选中的执行记录',
+    confirmDeletion: '确认删除',
+    deleteConfirmationMessage: '您确定要删除{{count}}条执行记录吗？此操作无法撤销。',
+    noExecutionsYet: '暂无执行记录',
+    
+    // ShareExecutionDialog
+    publicTraceLink: '公开跟踪链接',
+    anyoneWithLinkCanView: '任何拥有以下链接的人都可以查看此执行跟踪。',
+    copy: '复制',
+    copied: '已复制！',
+    copyLink: '复制链接',
+    unshare: '取消共享',
+    close: '关闭',
+    linkCopied: '链接已复制到剪贴板',
+    
+    // PublicExecutionDetails
+    invalidExecution: '无效的执行记录',
+    executionNotFoundOrNoPermission: '您查找的执行记录不存在或您没有权限查看。',
+    
+    // ExecutionDetails
+    executionSharedPublicly: '执行记录已公开共享',
+    executionNoLongerPublic: '执行记录不再公开',
+    updating: '更新中...',
+    share: '分享',
+    public: '公开',
+    refreshExecutionData: '刷新执行数据',
+    noDataAvailable: '此项目没有可用数据',
+    
+    // NodeExecutionDetails
+    rendered: '渲染视图'
   }
 }

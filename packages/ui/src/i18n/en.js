@@ -406,5 +406,55 @@ export default {
     note: 'Note',
     upsertApiNote: 'Upsert API can only be used when the existing document loader has been upserted before',
     overrideExistingConfigurations: 'You can override existing configurations'
+  },
+  // Executions相关
+  executionDetails: {
+    // AgentExecutions页面
+    agentExecutions: 'Agent Executions',
+    monitorAndManageAgentflows: 'Monitor and manage agentflows executions',
+    state: 'State',
+    all: 'All',
+    inProgress: 'In Progress',
+    finished: 'Finished',
+    error: 'Error',
+    terminated: 'Terminated',
+    timeout: 'Timeout',
+    stopped: 'Stopped',
+    startDate: 'Start date',
+    endDate: 'End date',
+    agentflow: 'Agentflow',
+    sessionId: 'Session ID',
+    apply: 'Apply',
+    reset: 'Reset',
+    deleteSelectedExecutions: 'Delete selected executions',
+    confirmDeletion: 'Confirm Deletion',
+    deleteConfirmationMessage: 'Are you sure you want to delete {{count}} execution{{plural}}? This action cannot be undone.',
+    noExecutionsYet: 'No Executions Yet',
+    
+    // ShareExecutionDialog
+    publicTraceLink: 'Public Trace Link',
+    anyoneWithLinkCanView: 'Anyone with the link below can view this execution trace.',
+    copy: 'Copy',
+    copied: 'Copied!',
+    copyLink: 'Copy link',
+    unshare: 'Unshare',
+    close: 'Close',
+    linkCopied: 'Link copied to clipboard',
+    
+    // PublicExecutionDetails
+    invalidExecution: 'Invalid Execution',
+    executionNotFoundOrNoPermission: 'The execution you\'re looking for doesn\'t exist or you don\'t have permission to view it.',
+    
+    // ExecutionDetails
+    executionSharedPublicly: 'Execution shared publicly',
+    executionNoLongerPublic: 'Execution is no longer public',
+    updating: 'Updating...',
+    share: 'Share',
+    public: 'Public',
+    refreshExecutionData: 'Refresh execution data',
+    noDataAvailable: 'No data available for this item',
+    
+    // NodeExecutionDetails
+    rendered: 'Rendered'
   }
 }

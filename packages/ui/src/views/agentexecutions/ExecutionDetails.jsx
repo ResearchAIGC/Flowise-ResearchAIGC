@@ -48,6 +48,7 @@ import executionsApi from '@/api/executions'
 
 // Hooks
 import useApi from '@/hooks/useApi'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 const getIconColor = (status) => {
     switch (status) {
@@ -300,6 +301,7 @@ export const ExecutionDetails = ({ open, isPublic, execution, metadata, onClose,
     const [localMetadata, setLocalMetadata] = useState({})
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
     const updateExecutionApi = useApi(executionsApi.updateExecution)
 
     const dispatch = useDispatch()
@@ -318,7 +320,7 @@ export const ExecutionDetails = ({ open, isPublic, execution, metadata, onClose,
         // Show success message
         dispatch(
             enqueueSnackbarAction({
-                message: 'ID copied to clipboard',
+                message: newIsPublic ? t('executionDetails.executionSharedPublicly') : t('executionDetails.executionNoLongerPublic'),
                 options: {
                     key: new Date().getTime() + Math.random(),
                     variant: 'success',
@@ -778,7 +780,7 @@ export const ExecutionDetails = ({ open, isPublic, execution, metadata, onClose,
                                     )
                                 }
                                 variant='outlined'
-                                label={updateExecutionApi.loading ? 'Updating...' : 'Share'}
+                                label={updateExecutionApi.loading ? t('executionDetails.updating') : t('executionDetails.share')}
                                 className={'button'}
                                 onClick={() => onSharePublicly()}
                                 disabled={updateExecutionApi.loading}
@@ -796,7 +798,7 @@ export const ExecutionDetails = ({ open, isPublic, execution, metadata, onClose,
                                     )
                                 }
                                 variant='outlined'
-                                label={updateExecutionApi.loading ? 'Updating...' : 'Public'}
+                                label={updateExecutionApi.loading ? t('executionDetails.updating') : t('executionDetails.public')}
                                 className={'button'}
                                 onClick={() => setShowShareDialog(true)}
                                 disabled={updateExecutionApi.loading}
@@ -816,7 +818,7 @@ export const ExecutionDetails = ({ open, isPublic, execution, metadata, onClose,
                                         backgroundColor: (theme) => theme.palette.primary.main + '20'
                                     }
                                 }}
-                                title='Refresh execution data'
+                                title={t('executionDetails.refreshExecutionData')}
                             >
                                 <IconRefresh size={20} />
                             </IconButton>
@@ -851,7 +853,7 @@ export const ExecutionDetails = ({ open, isPublic, execution, metadata, onClose,
                         onProceedSuccess={onProceedSuccess}
                     />
                 ) : (
-                    <Typography color='text.secondary'>No data available for this item</Typography>
+                    <Typography color='text.secondary'>{t('executionDetails.noDataAvailable')}</Typography>
                 )}
             </Box>
         </Box>

@@ -15,9 +15,12 @@ import { enqueueSnackbar as enqueueSnackbarAction, closeSnackbar as closeSnackba
 import executionsApi from '@/api/executions'
 import useApi from '@/hooks/useApi'
 
+import { useLanguage } from '@/store/context/LanguageContext'
+
 const ShareExecutionDialog = ({ show, executionId, onClose, onUnshare }) => {
     const portalElement = document.getElementById('portal')
     const theme = useTheme()
+    const { t } = useLanguage()
     const dispatch = useDispatch()
     const customization = useSelector((state) => state.customization)
     const [copied, setCopied] = useState(false)
@@ -35,7 +38,7 @@ const ShareExecutionDialog = ({ show, executionId, onClose, onUnshare }) => {
         // Show success message
         dispatch(
             enqueueSnackbarAction({
-                message: 'Link copied to clipboard',
+                message: t('executionDetails.linkCopied'),
                 options: {
                     key: new Date().getTime() + Math.random(),
                     variant: 'success',
@@ -63,11 +66,11 @@ const ShareExecutionDialog = ({ show, executionId, onClose, onUnshare }) => {
     const component = show ? (
         <Dialog open={show} onClose={onClose} maxWidth='sm' fullWidth aria-labelledby='share-dialog-title'>
             <DialogTitle id='share-dialog-title' sx={{ fontSize: '1.1rem', fontWeight: 600 }}>
-                Public Trace Link
+                {t('executionDetails.publicTraceLink')}
             </DialogTitle>
             <DialogContent>
                 <Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
-                    Anyone with the link below can view this execution trace.
+                    {t('executionDetails.anyoneWithLinkCanView')}
                 </Typography>
 
                 {/* Link Display Box */}
@@ -95,9 +98,9 @@ const ShareExecutionDialog = ({ show, executionId, onClose, onUnshare }) => {
                     >
                         {shareableLink}
                     </Typography>
-                    <Tooltip title={copied ? 'Copied!' : 'Copy link'}>
+                    <Tooltip title={copied ? t('executionDetails.copied') : t('executionDetails.copyLink')}>
                         <Button variant='text' color='primary' onClick={copyToClipboard} startIcon={<IconCopy size={18} />}>
-                            Copy
+                            {t('executionDetails.copy')}
                         </Button>
                     </Tooltip>
                 </Box>
@@ -105,9 +108,9 @@ const ShareExecutionDialog = ({ show, executionId, onClose, onUnshare }) => {
                 {/* Actions */}
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button color='error' onClick={handleUnshare} sx={{ mr: 1 }}>
-                        Unshare
+                        {t('executionDetails.unshare')}
                     </Button>
-                    <Button onClick={onClose}>Close</Button>
+                    <Button onClick={onClose}>{t('executionDetails.close')}</Button>
                 </Box>
             </DialogContent>
         </Dialog>

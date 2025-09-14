@@ -9,6 +9,8 @@ import executionsApi from '@/api/executions'
 // Hooks
 import useApi from '@/hooks/useApi'
 
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // MUI
 import { Box, Card, Stack, Typography, useTheme, CircularProgress } from '@mui/material'
 import { IconCircleXFilled } from '@tabler/icons-react'
@@ -19,6 +21,7 @@ import { alpha } from '@mui/material/styles'
 const PublicExecutionDetails = () => {
     const { id: executionId } = useParams()
     const theme = useTheme()
+    const { t } = useLanguage()
 
     const [execution, setExecution] = useState(null)
     const [selectedMetadata, setSelectedMetadata] = useState({})
@@ -77,10 +80,10 @@ const PublicExecutionDetails = () => {
                                     <Stack spacing={2} alignItems='center'>
                                         <IconCircleXFilled size={50} color={theme.palette.error.main} />
                                         <Typography variant='h3' color='error.main' align='center'>
-                                            Invalid Execution
+                                            {t('executionDetails.invalidExecution')}
                                         </Typography>
                                         <Typography variant='body1' color='text.secondary' align='center'>
-                                            {`The execution you're looking for doesn't exist or you don't have permission to view it.`}
+                                            {t('executionDetails.executionNotFoundOrNoPermission')}
                                         </Typography>
                                     </Stack>
                                 </Card>

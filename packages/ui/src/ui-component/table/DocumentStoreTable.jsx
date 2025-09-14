@@ -18,6 +18,7 @@ import {
 } from '@mui/material'
 import { tableCellClasses } from '@mui/material/TableCell'
 import DocumentStoreStatus from '@/views/docstore/DocumentStoreStatus'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     borderColor: theme.palette.grey[900] + 25,
@@ -41,6 +42,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 export const DocumentStoreTable = ({ data, isLoading, onRowClick, images }) => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     const localStorageKeyOrder = 'doc_store_order'
     const localStorageKeyOrderBy = 'doc_store_orderBy'
@@ -80,14 +82,14 @@ export const DocumentStoreTable = ({ data, isLoading, onRowClick, images }) => {
                             <StyledTableCell>&nbsp;</StyledTableCell>
                             <StyledTableCell>
                                 <TableSortLabel active={orderBy === 'name'} direction={order} onClick={() => handleRequestSort('name')}>
-                                    Name
+                                    {t('docstore.name')}
                                 </TableSortLabel>
                             </StyledTableCell>
-                            <StyledTableCell>Description</StyledTableCell>
-                            <StyledTableCell>Connected flows</StyledTableCell>
-                            <StyledTableCell>Total characters</StyledTableCell>
-                            <StyledTableCell>Total chunks</StyledTableCell>
-                            <StyledTableCell>Loader Types</StyledTableCell>
+                            <StyledTableCell>{t('docstore.description')}</StyledTableCell>
+                            <StyledTableCell>{t('docstore.connectedFlows')}</StyledTableCell>
+                            <StyledTableCell>{t('docstore.totalCharacters')}</StyledTableCell>
+                            <StyledTableCell>{t('docstore.totalChunks')}</StyledTableCell>
+                            <StyledTableCell>{t('docstore.loaderTypes')}</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -227,7 +229,7 @@ export const DocumentStoreTable = ({ data, isLoading, onRowClick, images }) => {
                                                                     fontWeight: 200
                                                                 }}
                                                             >
-                                                                + {images.length - 3} More
+                                                                + {images.length - 3} {t('docstore.more')}
                                                             </Typography>
                                                         )}
                                                     </Box>

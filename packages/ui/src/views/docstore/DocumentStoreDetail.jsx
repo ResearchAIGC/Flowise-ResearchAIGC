@@ -182,7 +182,7 @@ const DocumentStoreDetails = () => {
 
     const listLoaders = () => {
         const dialogProp = {
-            title: 'Select Document Loader'
+            ttitle: t('docstore.selectDocumentLoader')
         }
         setDocumentLoaderListDialogProps(dialogProp)
         setShowDocumentLoaderListDialog(true)
@@ -208,7 +208,7 @@ const DocumentStoreDetails = () => {
                 setBackdropLoading(false)
                 if (deleteResp.data) {
                     enqueueSnackbar({
-                        message: 'Store, Loader and associated document chunks deleted',
+                        message: t('docstore.storeLoaderAndChunksDeleted'),
                         options: {
                             key: new Date().getTime() + Math.random(),
                             variant: 'success',
@@ -225,7 +225,7 @@ const DocumentStoreDetails = () => {
                 setBackdropLoading(false)
                 setError(error)
                 enqueueSnackbar({
-                    message: `Failed to delete Document Store: ${
+                    message: `${t('docstore.failedToDeleteDocumentStore')}: ${
                         typeof error.response.data === 'object' ? error.response.data.message : error.response.data
                     }`,
                     options: {
@@ -246,7 +246,7 @@ const DocumentStoreDetails = () => {
                 setBackdropLoading(false)
                 if (deleteResp.data) {
                     enqueueSnackbar({
-                        message: 'Loader and associated document chunks deleted',
+                        message: t('docstore.loaderAndChunksDeleted'),
                         options: {
                             key: new Date().getTime() + Math.random(),
                             variant: 'success',
@@ -263,7 +263,7 @@ const DocumentStoreDetails = () => {
                 setError(error)
                 setBackdropLoading(false)
                 enqueueSnackbar({
-                    message: `Failed to delete Document Loader: ${
+                    message: `${t('docstore.failedToDeleteDocumentLoader')}: ${
                         typeof error.response.data === 'object' ? error.response.data.message : error.response.data
                     }`,
                     options: {
@@ -283,7 +283,7 @@ const DocumentStoreDetails = () => {
 
     const onLoaderDelete = (file, vectorStoreConfig, recordManagerConfig) => {
         const props = {
-            title: `Delete`,
+            title: t('docstore.deleteLoader'),
             description: `Delete Loader ${file.loaderName} ? This will delete all the associated document chunks.`,
             vectorStoreConfig,
             recordManagerConfig,
@@ -297,7 +297,7 @@ const DocumentStoreDetails = () => {
 
     const onStoreDelete = (vectorStoreConfig, recordManagerConfig) => {
         const props = {
-            title: `Delete`,
+            title: t('docstore.delete'),
             description: `Delete Store ${getSpecificDocumentStore.data?.name} ? This will delete all the associated loaders and document chunks.`,
             vectorStoreConfig,
             recordManagerConfig,
@@ -324,7 +324,7 @@ const DocumentStoreDetails = () => {
                 const resp = await documentsApi.refreshLoader(storeId)
                 if (resp.data) {
                     enqueueSnackbar({
-                        message: 'Document store refresh successfully!',
+                        message: t('docstore.documentStoreRefreshedSuccessfully'),
                         options: {
                             key: new Date().getTime() + Math.random(),
                             variant: 'success',
@@ -340,7 +340,7 @@ const DocumentStoreDetails = () => {
             } catch (error) {
                 setBackdropLoading(false)
                 enqueueSnackbar({
-                    message: `Failed to refresh document store: ${
+                    message: `${t('docstore.failedToRefreshDocumentStore')}: ${
                         typeof error.response.data === 'object' ? error.response.data.message : error.response.data
                     }`,
                     options: {
@@ -387,7 +387,7 @@ const DocumentStoreDetails = () => {
 
     const onViewUpsertAPI = (storeId, loaderId) => {
         const props = {
-            title: `Upsert API`,
+            title: t('docstore.upsertAPI'),
             storeId,
             loaderId
         }
@@ -444,7 +444,7 @@ const DocumentStoreDetails = () => {
                                     onClick={onConfirm}
                                     size='small'
                                     color='primary'
-                                    title='Refresh Document Store'
+                                    title={t('docstore.refreshDocumentStore')}
                                 >
                                     <IconRefresh />
                                 </PermissionIconButton>

@@ -1,10 +1,12 @@
 import { useTheme } from '@mui/material'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 const DocumentStoreStatus = ({ status, isTableView }) => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     const getColor = (status) => {
         switch (status) {
@@ -43,6 +45,27 @@ const DocumentStoreStatus = ({ status, isTableView }) => {
         }
     }
 
+    const getStatusText = (status) => {
+        switch (status) {
+            case 'STALE':
+                return t('docstore.status.stale')
+            case 'EMPTY':
+                return t('docstore.status.empty')
+            case 'SYNCING':
+                return t('docstore.status.syncing')
+            case 'UPSERTING':
+                return t('docstore.status.upserting')
+            case 'SYNC':
+                return t('docstore.status.sync')
+            case 'UPSERTED':
+                return t('docstore.status.upserted')
+            case 'NEW':
+                return t('docstore.status.new')
+            default:
+                return status
+        }
+    }
+
     return (
         <>
             {!isTableView && (
@@ -73,7 +96,7 @@ const DocumentStoreStatus = ({ status, isTableView }) => {
                             borderColor: status === 'EMPTY' ? getColor(status)[1] : 'transparent'
                         }}
                     />
-                    <span style={{ fontSize: '0.7rem', color: getColor(status)[2], marginLeft: 5 }}>{status}</span>
+                    <span style={{ fontSize: '0.7rem', color: getColor(status)[2], marginLeft: 5 }}>{getStatusText(status)}</span>
                 </div>
             )}
             {isTableView && (
@@ -87,7 +110,7 @@ const DocumentStoreStatus = ({ status, isTableView }) => {
                         border: status === 'EMPTY' ? '3px solid' : 'none',
                         borderColor: status === 'EMPTY' ? getColor(status)[1] : 'transparent'
                     }}
-                    title={status}
+                    title={getStatusText(status)}
                 ></div>
             )}
         </>

@@ -22,6 +22,9 @@ import { IconX, IconFiles } from '@tabler/icons-react'
 // API
 import documentStoreApi from '@/api/documentstore'
 
+// 导入useLanguage hook
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // utils
 import useNotifier from '@/utils/useNotifier'
 
@@ -29,6 +32,9 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
     const portalElement = document.getElementById('portal')
 
     const dispatch = useDispatch()
+
+    // 使用useLanguage hook获取t翻译函数
+    const { t } = useLanguage()
 
     // ==============================|| Snackbar ||============================== //
 
@@ -74,7 +80,7 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
             const createResp = await documentStoreApi.createDocumentStore(obj)
             if (createResp.data) {
                 enqueueSnackbar({
-                    message: 'New Document Store created.',
+                    message: t('docstore.created'),
                     options: {
                         key: new Date().getTime() + Math.random(),
                         variant: 'success',
@@ -89,9 +95,7 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
             }
         } catch (error) {
             enqueueSnackbar({
-                message: `Failed to add new Document Store: ${
-                    typeof error.response.data === 'object' ? error.response.data.message : error.response.data
-                }`,
+                message: `${t('docstore.failedToCreate')} ${typeof error.response.data === 'object' ? error.response.data.message : error.response.data}`,
                 options: {
                     key: new Date().getTime() + Math.random(),
                     variant: 'error',
@@ -117,7 +121,7 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
             const saveResp = await documentStoreApi.updateDocumentStore(docStoreId, saveObj)
             if (saveResp.data) {
                 enqueueSnackbar({
-                    message: 'Document Store Updated!',
+                    message: t('docstore.updated'),
                     options: {
                         key: new Date().getTime() + Math.random(),
                         variant: 'success',
@@ -132,9 +136,7 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
             }
         } catch (error) {
             enqueueSnackbar({
-                message: `Failed to update Document Store: ${
-                    typeof error.response.data === 'object' ? error.response.data.message : error.response.data
-                }`,
+                message: `${t('docstore.failedToUpdate')} ${typeof error.response.data === 'object' ? error.response.data.message : error.response.data}`,
                 options: {
                     key: new Date().getTime() + Math.random(),
                     variant: 'error',
@@ -162,14 +164,14 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
             <DialogTitle style={{ fontSize: '1rem' }} id='alert-dialog-title'>
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                     <IconFiles style={{ marginRight: '10px' }} />
-                    {dialogProps.title}
+                    {t(`docstore.${dialogProps.title.toLowerCase()}`) || dialogProps.title}
                 </div>
             </DialogTitle>
             <DialogContent>
                 <Box sx={{ p: 2 }}>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <Typography>
-                            Name<span style={{ color: 'red' }}>&nbsp;*</span>
+                            {t('docstore.name')}<span style={{ color: 'red' }}>&nbsp;*</span>
                         </Typography>
 
                         <div style={{ flexGrow: 1 }}></div>
@@ -186,7 +188,7 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
                 </Box>
                 <Box sx={{ p: 2 }}>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Typography>Description</Typography>
+                        <Typography>{t('docstore.description')}</Typography>
 
                         <div style={{ flexGrow: 1 }}></div>
                     </div>
@@ -204,13 +206,13 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => onCancel()}>Cancel</Button>
+                <Button onClick={() => onCancel()}>{t('cancel')}</Button>
                 <StyledButton
                     disabled={!documentStoreName}
                     variant='contained'
                     onClick={() => (dialogType === 'ADD' ? createDocumentStore() : updateDocumentStore())}
                 >
-                    {dialogProps.confirmButtonName}
+                    {t(`docstore.${dialogProps.confirmButtonName.toLowerCase()}`) || dialogProps.confirmButtonName}
                 </StyledButton>
             </DialogActions>
             <ConfirmDialog />

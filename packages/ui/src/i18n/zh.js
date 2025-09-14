@@ -346,6 +346,7 @@ export default {
     update: '更新',
     upsertAPI: '上传API',
     addDocumentLoader: '添加文档加载器',
+    selectDocumentLoader: '选择文档加载器',
     moreActions: '更多操作',
     viewEditChunks: '查看和编辑块',
     upsertAllChunks: '重载所有块',
@@ -365,6 +366,45 @@ export default {
     options: '选项',
     previewProcess: '预览和处理',
     upsertChunks: '重载块',
-    viewAPI: '查看API'
+    viewAPI: '查看API',
+    flow: '流程',
+    flows: '流程',
+    // ... AddDocShareDialog ...
+    name: '名称',
+    created: '已创建新文档存储。',
+    updated: '文档存储已更新！',
+    failedToCreate: '创建新文档存储失败：',
+    failedToUpdate: '更新文档存储失败：',
+    // DocumentStoreTable
+    connectedFlows: '连接的聊天流程',
+    totalCharacters: '总字符数',
+    totalChunks: '总块数',
+    loaderTypes: '加载器类型',
+    more: '更多',
+    status: {
+      stale: '待处理',
+      empty: '空',
+      syncing: '同步中',
+      upserting: '更新中',
+      sync: '已同步',
+      upserted: '已更新',
+      new: '新建'
+    },
+    // DocumentStoreDetail
+    storeLoaderAndChunksDeleted: '存储、加载器和相关文档块已删除',
+    failedToDeleteDocumentStore: '删除文档存储失败',
+    loaderAndChunksDeleted: '加载器和相关文档块已删除',
+    failedToDeleteDocumentLoader: '删除文档加载器失败',
+    documentStoreRefreshedSuccessfully: '文档存储刷新成功！',
+    failedToRefreshDocumentStore: '刷新文档存储失败',
+    refreshDocumentStore: '刷新文档存储',
+    // Dialog
+    search: '搜索',
+    clearSearch: '清除搜索',
+    removeFromVectorStoreAndRecordManager: '从向量存储和记录管理器中删除数据',
+    noteOnlyDataWithRecordManagerDeleted: '* 只有使用记录管理器上传的数据才会从向量存储中删除',
+    note: '注意',
+    upsertApiNote: '只有当现有文档加载器之前已经上传过数据时，才能使用Upsert API',
+    overrideExistingConfigurations: '您可以覆盖现有配置'
   }
 }

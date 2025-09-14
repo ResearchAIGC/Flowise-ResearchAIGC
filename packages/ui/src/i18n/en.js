@@ -346,6 +346,7 @@ export default {
     update: 'Update',
     upsertAPI: 'Upsert API',
     addDocumentLoader: 'Add Document Loader',
+    selectDocumentLoader: 'Select Document Loader',
     moreActions: 'More Actions',
     viewEditChunks: 'View & Edit Chunks',
     upsertAllChunks: 'Upsert All Chunks',
@@ -365,6 +366,45 @@ export default {
     options: 'Options',
     previewProcess: 'Preview & Process',
     upsertChunks: 'Upsert Chunks',
-    viewAPI: 'View API'
+    viewAPI: 'View API',
+    flow: 'flow',
+    flows: 'flows',
+    // AddDocShareDialog
+    name: 'Name',
+    created: 'New Document Store created.',
+    updated: 'Document Store Updated!',
+    failedToCreate: 'Failed to add new Document Store:',
+    failedToUpdate: 'Failed to update Document Store:',
+    // DocumentStoreTable
+    connectedFlows: 'Connected flows',
+    totalCharacters: 'Total characters',
+    totalChunks: 'Total chunks',
+    loaderTypes: 'Loader Types',
+    more: 'More',
+    status: {
+      stale: 'STALE',
+      empty: 'EMPTY',
+      syncing: 'SYNCING',
+      upserting: 'UPSERTING',
+      sync: 'SYNC',
+      upserted: 'UPSERTED',
+      new: 'NEW'
+    },
+    // DocumentStoreDetail
+    storeLoaderAndChunksDeleted: 'Store, Loader and associated document chunks deleted',
+    failedToDeleteDocumentStore: 'Failed to delete Document Store',
+    loaderAndChunksDeleted: 'Loader and associated document chunks deleted',
+    failedToDeleteDocumentLoader: 'Failed to delete Document Loader',
+    documentStoreRefreshedSuccessfully: 'Document store refresh successfully!',
+    failedToRefreshDocumentStore: 'Failed to refresh document store',
+    refreshDocumentStore: 'Refresh Document Store',
+    // Dialog
+    search: 'Search',
+    clearSearch: 'Clear Search',
+    removeFromVectorStoreAndRecordManager: 'Remove data from vector store and record manager',
+    noteOnlyDataWithRecordManagerDeleted: '* Only data that were upserted with Record Manager will be deleted from vector store',
+    note: 'Note',
+    upsertApiNote: 'Upsert API can only be used when the existing document loader has been upserted before',
+    overrideExistingConfigurations: 'You can override existing configurations'
   }
 }

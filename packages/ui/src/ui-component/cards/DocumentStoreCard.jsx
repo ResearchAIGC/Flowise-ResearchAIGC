@@ -10,6 +10,8 @@ import { IconVectorBezier2, IconLanguage, IconScissors } from '@tabler/icons-rea
 import MainCard from '@/ui-component/cards/MainCard'
 import DocumentStoreStatus from '@/views/docstore/DocumentStoreStatus'
 
+import { useLanguage } from '@/store/context/LanguageContext'
+
 import { kFormatter } from '@/utils/genericHelper'
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
@@ -36,6 +38,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 const DocumentStoreCard = ({ data, images, onClick }) => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     return (
         <CardWrapper content={false} onClick={onClick} sx={{ border: 1, borderColor: theme.palette.grey[900] + 25, borderRadius: 2 }}>
@@ -102,7 +105,7 @@ const DocumentStoreCard = ({ data, images, onClick }) => {
                             }}
                         >
                             <IconVectorBezier2 style={{ marginRight: 5 }} size={15} />
-                            {data.whereUsed?.length ?? 0} {data.whereUsed?.length <= 1 ? 'flow' : 'flows'}
+                            {data.whereUsed?.length ?? 0} {data.whereUsed?.length <= 1 ? t('docstore.flow') : t('docstore.flows')}
                         </div>
                         <div
                             style={{
@@ -123,7 +126,7 @@ const DocumentStoreCard = ({ data, images, onClick }) => {
                             }}
                         >
                             <IconLanguage style={{ marginRight: 5 }} size={15} />
-                            {kFormatter(data.totalChars ?? 0)} chars
+                            {kFormatter(data.totalChars ?? 0)} {t('docstore.chars')}
                         </div>
                         <div
                             style={{
@@ -143,7 +146,7 @@ const DocumentStoreCard = ({ data, images, onClick }) => {
                             }}
                         >
                             <IconScissors style={{ marginRight: 5 }} size={15} />
-                            {kFormatter(data.totalChunks ?? 0)} chunks
+                            {kFormatter(data.totalChunks ?? 0)} {t('docstore.chunks')}
                         </div>
                     </Grid>
                     {images && images.length > 0 && (
@@ -172,7 +175,7 @@ const DocumentStoreCard = ({ data, images, onClick }) => {
                             ))}
                             {images.length > 3 && (
                                 <Typography sx={{ alignItems: 'center', display: 'flex', fontSize: '.9rem', fontWeight: 200 }}>
-                                    + {images.length - 3} More
+                                    + {images.length - 3} {t('docstore.more')}
                                 </Typography>
                             )}
                         </Box>

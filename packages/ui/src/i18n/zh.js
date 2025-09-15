@@ -97,26 +97,6 @@ export default {
   variables: '变量',
   specifyMultipleValues: '您还可以通过指定节点ID来为配置参数指定多个值',
   streamingResponse: '对于流式响应，在URL中添加 ?stream=true',
-  
-  // ShareChatbot相关
-  chatbotConfigSaved: '聊天机器人配置已保存',
-  failedToSaveChatbotConfig: '保存聊天机器人配置失败',
-  titleSettings: '标题设置',
-  generalSettings: '通用设置',
-  botMessage: '机器人消息',
-  userMessage: '用户消息',
-  textInput: '文本输入',
-  flowiseAssistant: 'Flowise助手',
-  typeQuestion: '输入问题...',
-  saveChanges: '保存更改',
-  
-  // EmbedChat相关
-  hiThere: '你好 👋!',
-  disclaimer: '免责声明',
-  typeYourQuestion: '输入您的问题',
-  pasteInBodyTag: '将此粘贴到您的html文件的<body>标签中的任何位置。',
-  version: '版本',
-  showEmbedChatConfig: '显示嵌入聊天配置',
 
     // Agentflows相关
   agentflowsDescription: '多智能体系统、工作流编排',
@@ -456,5 +436,82 @@ export default {
     
     // NodeExecutionDetails
     rendered: '渲染视图'
-  }
+  },
+  // Chatbot相关
+    chatbot: {
+        // ChatMessage组件相关翻译
+        welcomeMessage: '你好！我能怎么帮您？',
+        saving: '保存中...',
+        save: '保存',
+        clearAll: '清空全部',
+        stopGenerating: '停止生成',
+        removeAttachment: '移除附件',
+        waitingForResponse: '等待回复中...',
+        typeYourQuestion: '输入您的问题...',
+        tryThesePrompts: '尝试这些提示',
+        errorMessage: '发生错误，请重试。',
+        // ShareChatbot组件相关翻译
+        chatbotConfigurationSaved: '聊天机器人配置已保存',
+        failedToSaveChatbotConfiguration: '保存聊天机器人配置失败：',
+        copyLink: '复制链接',
+        openNewTab: '在新标签页打开',
+        makePublic: '设为公开',
+        makePublicTooltip: '设为公开后，任何人无需认证即可访问该聊天机器人',
+        titleSettings: '标题设置',
+        title: '标题',
+        titleAvatarLink: '标题头像链接',
+        titleBackgroundColor: '标题背景色',
+        titleTextColor: '标题文字颜色',
+        generalSettings: '通用设置',
+        backgroundColor: '背景色',
+        fontSize: '字体大小',
+        poweredByTextColor: '技术支持文字颜色',
+        showAgentReasonings: '使用Agentflow时显示代理推理过程',
+        renderHTML: '在聊天中渲染HTML',
+        startNewSession: '打开或刷新聊天机器人链接时开始新会话',
+        botMessage: '机器人消息',
+        avatarLink: '头像链接',
+        showAvatar: '显示头像',
+        userMessage: '用户消息',
+        textInput: '文本输入框',
+        textInputPlaceholder: '文本输入框占位符',
+        typeQuestion: '输入问题...',
+        textInputSendButtonColor: '文本输入发送按钮颜色',
+        saveChanges: '保存更改',
+        copied: '已复制!'
+    },
+  // EmbedChat相关
+  embedChat: {
+    popupHtml: '弹窗HTML',
+    fullpageHtml: '全屏HTML',
+    popupReact: '弹窗React',
+    fullpageReact: '全屏React',
+    showEmbedChatConfig: '显示嵌入聊天配置',
+    pasteInBody: '将此代码粘贴到HTML文件的<body>标签中的任意位置。',
+    specifyVersion: '您也可以指定版本：',
+    version: '版本',
+    themeConfig: {
+      tooltipMessage: '你好！👋',
+      disclaimer: {
+        title: '免责声明',
+        message: '使用此聊天机器人，即表示您同意<a target="_blank" href="https://flowiseai.com/terms">条款和条件</a>',
+        buttonText: '开始聊天'
+      },
+      chatWindow: {
+        title: 'Flowise机器人',
+        welcomeMessage: '您好！这是自定义欢迎消息',
+        errorMessage: '这是自定义错误消息',
+        starterPrompts: ['什么是机器人？', '你是谁？'],
+        sourceDocsTitle: '来源：',
+        textInput: {
+          placeholder: '输入您的问题',
+          maxCharsWarningMessage: '您已超过字符限制。请输入少于50个字符。'
+        },
+        footer: {
+          text: '技术支持',
+          company: 'Flowise'
+        }
+      }
+    }
+  },
 }

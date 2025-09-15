@@ -76,6 +76,7 @@ import executionsApi from '@/api/executions'
 // Hooks
 import useApi from '@/hooks/useApi'
 import { flowContext } from '@/store/context/ReactFlowContext'
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // Const
 import { baseURL, maxScroll } from '@/store/constant'
@@ -137,7 +138,7 @@ const CardWithDeleteOverlay = ({ item, disabled, customization, onDelete }) => {
                     disabled={disabled}
                     onClick={() => onDelete(item)}
                     startIcon={<IconTrash color='white' size={22} />}
-                    title='Remove attachment'
+                    title={t('chatbot.removeAttachment')}
                     sx={{
                         position: 'absolute',
                         top: 0,
@@ -165,6 +166,7 @@ CardWithDeleteOverlay.propTypes = {
 const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setPreviews }) => {
     const theme = useTheme()
     const customization = useSelector((state) => state.customization)
+    const { t } = useLanguage()
 
     const ps = useRef()
 
@@ -179,7 +181,7 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
     const [loading, setLoading] = useState(false)
     const [messages, setMessages] = useState([
         {
-            message: 'Hi there! How can I help?',
+            message: t('chatbot.welcomeMessage'),
             type: 'apiMessage'
         }
     ])
@@ -291,7 +293,7 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
             }
         }
         if (!acceptFile) {
-            alert(`Cannot upload file. Kindly check the allowed file types and maximum allowed size.`)
+            alert(t('chatbot.fileUploadError'))
         }
         return acceptFile
     }
@@ -685,8 +687,10 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
         })
     }
 
-    const handleError = (message = 'Oops! There seems to be an error. Please try again.') => {
-        message = message.replace(`Unable to parse JSON response from chat agent.\n\n`, '')
+    const handleError = (message = t('chatbot.errorMessage')) => {
+        message = message.replace(`Unable to parse JSON response from chat agent.
+
+`, '')
         setMessages((prevMessages) => [...prevMessages, { message, type: 'apiMessage' }])
         setLoading(false)
         setUserInput('')
@@ -1356,14 +1360,14 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
             setLoading(false)
             setMessages([
                 {
-                    message: 'Hi there! How can I help?',
+                    message: t('chatbot.welcomeMessage'),
                     type: 'apiMessage'
                 }
             ])
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [open, chatflowid])
+    }, [open, chatflowid, t]) 
 
     useEffect(() => {
         // wait for audio recording to load and then send
@@ -2000,7 +2004,7 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
                                                                 id='leadPhone'
                                                                 type='number'
                                                                 fullWidth
-                                                                placeholder='Phone Number'
+                                                                placeholder={t('chatbot.phoneNumber')}
                                                                 name='leadPhone'
                                                                 value={leadPhone}
                                                                 onChange={(e) => setLeadPhone(e.target.value)}
@@ -2018,7 +2022,7 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
                                                                 type='submit'
                                                                 sx={{ borderRadius: '20px' }}
                                                             >
-                                                                {isLeadSaving ? 'Saving...' : 'Save'}
+                                                                {isLeadSaving ? t('chatbot.saving') : t('chatbot.save')}
                                                             </Button>
                                                         </Box>
                                                     </form>
@@ -2208,7 +2212,7 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
                         <Stack sx={{ flexDirection: 'row', alignItems: 'center', px: 1.5, gap: 0.5 }}>
                             <IconSparkles size={12} />
                             <Typography sx={{ fontSize: '0.75rem' }} variant='body2'>
-                                Try these prompts
+                                {t('chatbot.tryThesePrompts')}
                             </Typography>
                         </Stack>
                         <FollowUpPromptsCard
@@ -2298,7 +2302,7 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
                             onKeyDown={handleEnter}
                             id='userInput'
                             name='userInput'
-                            placeholder={loading ? 'Waiting for response...' : 'Type your question...'}
+                            placeholder={loading ? t('chatbot.waitingForResponse') : t('chatbot.typeYourQuestion')}
                             value={userInput}
                             onChange={onChange}
                             multiline={true}
@@ -2417,7 +2421,7 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
                                                 <InputAdornment position='end' sx={{ padding: '15px', mr: 1 }}>
                                                     <IconButton
                                                         edge='end'
-                                                        title={isMessageStopping ? 'Stopping...' : 'Stop'}
+                                                        title={isMessageStopping ? t('chatbot.stopping') : t('chatbot.stop')}
                                                         style={{ border: !isMessageStopping ? '2px solid red' : 'none' }}
                                                         onClick={() => handleAbort()}
                                                         disabled={isMessageStopping}
@@ -2476,13 +2480,12 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
                     setFeedback('')
                 }}
             >
-                <DialogTitle variant='h5'>Provide Feedback</DialogTitle>
+                <DialogTitle variant='h5'>{t('chatbot.provideFeedback')}</DialogTitle>
                 <DialogContent>
                     <TextField
-                        // eslint-disable-next-line
                         autoFocus
                         margin='dense'
-                        label='Feedback'
+                        label={t('chatbot.feedback')}
                         fullWidth
                         multiline
                         rows={4}
@@ -2491,9 +2494,9 @@ const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, previews, setP
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleSubmitFeedback}>Cancel</Button>
+                    <Button onClick={handleSubmitFeedback}>{t('chatbot.cancel')}</Button>
                     <Button onClick={handleSubmitFeedback} variant='contained'>
-                        Submit
+                        {t('chatbot.submit')}
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -97,26 +97,6 @@ export default {
   variables: 'Variables',
   specifyMultipleValues: 'You can also specify multiple values for a config parameter by specifying the node id',
   streamingResponse: 'For streaming response, add ?stream=true to the URL',
-  
-  // ShareChatbot related
-  chatbotConfigSaved: 'Chatbot Configuration Saved',
-  failedToSaveChatbotConfig: 'Failed to save Chatbot Configuration',
-  titleSettings: 'Title Settings',
-  generalSettings: 'General Settings',
-  botMessage: 'Bot Message',
-  userMessage: 'User Message',
-  textInput: 'Text Input',
-  flowiseAssistant: 'Flowise Assistant',
-  typeQuestion: 'Type question..',
-  saveChanges: 'Save Changes',
-  
-  // EmbedChat related
-  hiThere: 'Hi There 👋!',
-  disclaimer: 'Disclaimer',
-  typeYourQuestion: 'Type your question',
-  pasteInBodyTag: 'Paste this anywhere in the <body> tag of your html file.',
-  version: 'version',
-  showEmbedChatConfig: 'Show Embed Chat Config',
 
     // Agentflows related
   agentflowsDescription: 'Multi-agent systems, workflow orchestration',
@@ -456,5 +436,82 @@ export default {
     
     // NodeExecutionDetails
     rendered: 'Rendered'
-  }
+  },
+  // Chatbot相关
+    chatbot: {
+        // ChatMessage组件相关翻译
+        welcomeMessage: 'Hi there! How can I help?',
+        saving: 'Saving...',
+        save: 'Save',
+        clearAll: 'Clear All',
+        stopGenerating: 'Stop Generating',
+        removeAttachment: 'Remove Attachment',
+        waitingForResponse: 'Waiting for response...',
+        typeYourQuestion: 'Type your question...',
+        tryThesePrompts: 'Try these prompts',
+        errorMessage: 'Something went wrong. Please try again.',
+        // ShareChatbot组件相关翻译
+        chatbotConfigurationSaved: 'Chatbot Configuration Saved',
+        failedToSaveChatbotConfiguration: 'Failed to save Chatbot Configuration:',
+        copyLink: 'Copy Link',
+        openNewTab: 'Open in New Tab',
+        makePublic: 'Make Public',
+        makePublicTooltip: 'Making public will allow anyone to access the chatbot without authentication',
+        titleSettings: 'Title Settings',
+        title: 'Title',
+        titleAvatarLink: 'Title Avatar Link',
+        titleBackgroundColor: 'Title Background Color',
+        titleTextColor: 'Title TextColor',
+        generalSettings: 'General Settings',
+        backgroundColor: 'Background Color',
+        fontSize: 'Font Size',
+        poweredByTextColor: 'PoweredBy TextColor',
+        showAgentReasonings: 'Show agent reasonings when using Agentflow',
+        renderHTML: 'Render HTML on the chat',
+        startNewSession: 'Start new session when chatbot link is opened or refreshed',
+        botMessage: 'Bot Message',
+        avatarLink: 'Avatar Link',
+        showAvatar: 'Show Avatar',
+        userMessage: 'User Message',
+        textInput: 'Text Input',
+        textInputPlaceholder: 'TextInput Placeholder',
+        typeQuestion: 'Type question..',
+        textInputSendButtonColor: 'TextIntput Send Button Color',
+        saveChanges: 'Save Changes',
+        copied: 'Copied!'
+    },
+  // EmbedChat相关
+  embedChat: {
+    popupHtml: 'Popup Html',
+    fullpageHtml: 'Fullpage Html',
+    popupReact: 'Popup React',
+    fullpageReact: 'Fullpage React',
+    showEmbedChatConfig: 'Show Embed Chat Config',
+    pasteInBody: 'Paste this anywhere in the <body> tag of your html file.',
+    specifyVersion: 'You can also specify a version:',
+    version: 'version',
+    themeConfig: {
+      tooltipMessage: 'Hi There 👋!',
+      disclaimer: {
+        title: 'Disclaimer',
+        message: 'By using this chatbot, you agree to the <a target="_blank" href="https://flowiseai.com/terms">Terms & Condition</a>',
+        buttonText: 'Start Chatting'
+      },
+      chatWindow: {
+        title: 'Flowise Bot',
+        welcomeMessage: 'Hello! This is custom welcome message',
+        errorMessage: 'This is a custom error message',
+        starterPrompts: ['What is a bot?', 'Who are you?'],
+        sourceDocsTitle: 'Sources:',
+        textInput: {
+          placeholder: 'Type your question',
+          maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 50 characters.'
+        },
+        footer: {
+          text: 'Powered by',
+          company: 'Flowise'
+        }
+      }
+    }
+  },
 }

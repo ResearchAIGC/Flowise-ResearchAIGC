@@ -7,6 +7,8 @@ import { CopyBlock, atomOneDark } from 'react-code-blocks'
 // Project import
 import { CheckboxInput } from '@/ui-component/checkbox/Checkbox'
 
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // Const
 import { baseURL } from '@/store/constant'
 
@@ -232,16 +234,111 @@ const App = () => {
 }`
 }
 
-const getFullPageThemeConfig = () => {
-    return {
-        ...defaultThemeConfig,
-        chatWindow: {
-            ...defaultThemeConfig.chatWindow,
-            height: '100%',
-            width: '100%'
+    const getDefaultThemeConfig = () => {
+        const themeConfig = t('embedChat.themeConfig')
+        return {
+            button: {
+                backgroundColor: '#3B81F6',
+                right: 20,
+                bottom: 20,
+                size: 48,
+                dragAndDrop: true,
+                iconColor: 'white',
+                customIconSrc: 'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg',
+                autoWindowOpen: {
+                    autoOpen: true,
+                    openDelay: 2,
+                    autoOpenOnMobile: false
+                }
+            },
+            tooltip: {
+                showTooltip: true,
+                tooltipMessage: themeConfig.tooltipMessage,
+                tooltipBackgroundColor: 'black',
+                tooltipTextColor: 'white',
+                tooltipFontSize: 16
+            },
+            disclaimer: {
+                title: themeConfig.disclaimer.title,
+                message: themeConfig.disclaimer.message,
+                textColor: 'black',
+                buttonColor: '#3b82f6',
+                buttonText: themeConfig.disclaimer.buttonText,
+                buttonTextColor: 'white',
+                blurredBackgroundColor: 'rgba(0, 0, 0, 0.4)',
+                backgroundColor: 'white'
+            },
+            customCSS: ``,
+            chatWindow: {
+                showTitle: true,
+                showAgentMessages: true,
+                title: themeConfig.chatWindow.title,
+                titleAvatarSrc: 'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg',
+                welcomeMessage: themeConfig.chatWindow.welcomeMessage,
+                errorMessage: themeConfig.chatWindow.errorMessage,
+                backgroundColor: '#ffffff',
+                backgroundImage: 'enter image path or link',
+                height: 700,
+                width: 400,
+                fontSize: 16,
+                starterPrompts: themeConfig.chatWindow.starterPrompts,
+                starterPromptFontSize: 15,
+                clearChatOnReload: false,
+                sourceDocsTitle: themeConfig.chatWindow.sourceDocsTitle,
+                renderHTML: true,
+                botMessage: {
+                    backgroundColor: '#f7f8ff',
+                    textColor: '#303235',
+                    showAvatar: true,
+                    avatarSrc: 'https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png'
+                },
+                userMessage: {
+                    backgroundColor: '#3B81F6',
+                    textColor: '#ffffff',
+                    showAvatar: true,
+                    avatarSrc: 'https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png'
+                },
+                textInput: {
+                    placeholder: themeConfig.chatWindow.textInput.placeholder,
+                    backgroundColor: '#ffffff',
+                    textColor: '#303235',
+                    sendButtonColor: '#3B81F6',
+                    maxChars: 50,
+                    maxCharsWarningMessage: themeConfig.chatWindow.textInput.maxCharsWarningMessage,
+                    autoFocus: true,
+                    sendMessageSound: true,
+                    sendSoundLocation: 'send_message.mp3',
+                    receiveMessageSound: true,
+                    receiveSoundLocation: 'receive_message.mp3'
+                },
+                feedback: {
+                    color: '#303235'
+                },
+                dateTimeToggle: {
+                    date: true,
+                    time: true
+                },
+                footer: {
+                    textColor: '#303235',
+                    text: themeConfig.chatWindow.footer.text,
+                    company: themeConfig.chatWindow.footer.company,
+                    companyLink: 'https://flowiseai.com'
+                }
+            }
         }
     }
-}
+
+    const getFullPageThemeConfig = () => {
+        const defaultConfig = getDefaultThemeConfig()
+        return {
+            ...defaultConfig,
+            chatWindow: {
+                ...defaultConfig.chatWindow,
+                height: '100%',
+                width: '100%'
+            }
+        }
+    }
 
 const embedFullpageHtmlCodeCustomization = (chatflowid) => {
     return `<flowise-fullchatbot></flowise-fullchatbot>
@@ -286,7 +383,8 @@ const App = () => {
 }
 
 const EmbedChat = ({ chatflowid }) => {
-    const codes = ['Popup Html', 'Fullpage Html', 'Popup React', 'Fullpage React']
+    const { t } = useLanguage()
+    const codes = [t('embedChat.popupHtml'), t('embedChat.fullpageHtml'), t('embedChat.popupReact'), t('embedChat.fullpageReact')]
     const [value, setValue] = useState(0)
     const [embedChatCheckboxVal, setEmbedChatCheckbox] = useState(false)
 
@@ -345,15 +443,15 @@ const EmbedChat = ({ chatflowid }) => {
                     {(value === 0 || value === 1) && (
                         <>
                             <span>
-                                Paste this anywhere in the <code>{`<body>`}</code> tag of your html file.
+                                {t('embedChat.pasteInBody')}
                                 <p>
-                                    You can also specify a&nbsp;
+                                    {t('embedChat.specifyVersion')}
                                     <a
                                         rel='noreferrer'
                                         target='_blank'
                                         href='https://www.npmjs.com/package/flowise-embed?activeTab=versions'
                                     >
-                                        version
+                                        {t('embedChat.version')}
                                     </a>
                                     :&nbsp;<code>{`https://cdn.jsdelivr.net/npm/flowise-embed@<version>/dist/web.js`}</code>
                                 </p>
@@ -363,7 +461,7 @@ const EmbedChat = ({ chatflowid }) => {
                     )}
                     <CopyBlock theme={atomOneDark} text={getCode(codeLang)} language='javascript' showLineNumbers={false} wrapLines />
 
-                    <CheckboxInput label='Show Embed Chat Config' value={embedChatCheckboxVal} onChange={onCheckBoxEmbedChatChanged} />
+                    <CheckboxInput label={t('embedChat.showEmbedChatConfig')} value={embedChatCheckboxVal} onChange={onCheckBoxEmbedChatChanged} />
 
                     {embedChatCheckboxVal && (
                         <CopyBlock

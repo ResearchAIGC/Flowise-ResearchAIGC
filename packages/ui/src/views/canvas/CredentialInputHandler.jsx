@@ -5,6 +5,9 @@ import { useEffect, useRef, useState } from 'react'
 import { IconButton } from '@mui/material'
 import { IconEdit } from '@tabler/icons-react'
 
+// 添加国际化 hook
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // project import
 import { AsyncDropdown } from '@/ui-component/dropdown/AsyncDropdown'
 import AddEditCredentialDialog from '@/views/credentials/AddEditCredentialDialog'
@@ -26,12 +29,14 @@ const CredentialInputHandler = ({ inputParam, data, onSelect, disabled = false }
     const [specificCredentialDialogProps, setSpecificCredentialDialogProps] = useState({})
     const [reloadTimestamp, setReloadTimestamp] = useState(Date.now().toString())
     const { hasPermission } = useAuth()
+    // 添加国际化 hook
+    const { t } = useLanguage()
 
     const editCredential = (credentialId) => {
         const dialogProp = {
             type: 'EDIT',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Save',
+            cancelButtonName: t('common.cancel'),
+            confirmButtonName: t('common.save'),
             credentialId
         }
         setSpecificCredentialDialogProps(dialogProp)
@@ -50,7 +55,7 @@ const CredentialInputHandler = ({ inputParam, data, onSelect, disabled = false }
             if (componentCredentialsResp.data) {
                 if (Array.isArray(componentCredentialsResp.data)) {
                     const dialogProp = {
-                        title: 'Add New Credential',
+                        title: t('canvas.addNewCredential'),
                         componentsCredentials: componentCredentialsResp.data
                     }
                     setCredentialListDialogProps(dialogProp)
@@ -58,8 +63,8 @@ const CredentialInputHandler = ({ inputParam, data, onSelect, disabled = false }
                 } else {
                     const dialogProp = {
                         type: 'ADD',
-                        cancelButtonName: 'Cancel',
-                        confirmButtonName: 'Add',
+                        cancelButtonName: t('common.cancel'),
+                        confirmButtonName: t('common.add'),
                         credentialComponent: componentCredentialsResp.data
                     }
                     setSpecificCredentialDialogProps(dialogProp)
@@ -83,8 +88,8 @@ const CredentialInputHandler = ({ inputParam, data, onSelect, disabled = false }
         setShowCredentialListDialog(false)
         const dialogProp = {
             type: 'ADD',
-            cancelButtonName: 'Cancel',
-            confirmButtonName: 'Add',
+            cancelButtonName: t('common.cancel'),
+            confirmButtonName: t('common.add'),
             credentialComponent
         }
         setSpecificCredentialDialogProps(dialogProp)
@@ -96,7 +101,7 @@ const CredentialInputHandler = ({ inputParam, data, onSelect, disabled = false }
     }, [data])
 
     return (
-        <div ref={ref}>
+       <div ref={ref}>
             {inputParam && (
                 <>
                     {inputParam.type === 'credential' && (
@@ -105,7 +110,7 @@ const CredentialInputHandler = ({ inputParam, data, onSelect, disabled = false }
                                 disabled={disabled}
                                 name={inputParam.name}
                                 nodeData={data}
-                                value={credentialId ?? 'choose an option'}
+                                value={credentialId ?? t('canvas.chooseAnOption')}
                                 isCreateNewOption={hasPermission('credentials:create')}
                                 credentialNames={inputParam.credentialNames}
                                 onSelect={(newValue) => {
@@ -115,7 +120,7 @@ const CredentialInputHandler = ({ inputParam, data, onSelect, disabled = false }
                                 onCreateNew={() => addAsyncOption(inputParam.name)}
                             />
                             {credentialId && hasPermission('credentials:update') && (
-                                <IconButton title='Edit' color='primary' size='small' onClick={() => editCredential(credentialId)}>
+                                <IconButton title={t('common.edit')} color='primary' size='small' onClick={() => editCredential(credentialId)}>
                                     <IconEdit />
                                 </IconButton>
                             )}

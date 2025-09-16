@@ -7,6 +7,9 @@ import { useTheme } from '@mui/material/styles'
 import { IconButton, Box, Typography, Divider, Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 
+// 添加国际化 hook
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // project imports
 import NodeCardWrapper from '@/ui-component/cards/NodeCardWrapper'
 import NodeTooltip from '@/ui-component/tooltip/NodeTooltip'
@@ -24,6 +27,9 @@ import LlamaindexPNG from '@/assets/images/llamaindex.png'
 // ===========================|| CANVAS NODE ||=========================== //
 
 const CanvasNode = ({ data }) => {
+    // 添加国际化
+    const { t } = useLanguage()
+
     const theme = useTheme()
     const canvas = useSelector((state) => state.canvas)
     const { deleteNode, duplicateNode } = useContext(flowContext)
@@ -49,16 +55,16 @@ const CanvasNode = ({ data }) => {
         else return !canvas.canvasDialogShow && open
     }
 
-    const nodeOutdatedMessage = (oldVersion, newVersion) => `Node version ${oldVersion} outdated\nUpdate to latest version ${newVersion}`
+    const nodeOutdatedMessage = (oldVersion, newVersion) => t('canvas.nodeOutdatedMessage', { oldVersion, newVersion })
 
-    const nodeVersionEmptyMessage = (newVersion) => `Node outdated\nUpdate to latest version ${newVersion}`
+    const nodeVersionEmptyMessage = (newVersion) => t('canvas.nodeVersionEmptyMessage', { newVersion })
 
     const onDialogClicked = () => {
         const dialogProps = {
             data,
             inputParams: data.inputParams.filter((inputParam) => !inputParam.hidden).filter((param) => param.additionalParams),
-            confirmButtonName: 'Save',
-            cancelButtonName: 'Cancel'
+            confirmButtonName: t('common.save'),
+            cancelButtonName: t('common.cancel')
         }
         setDialogProps(dialogProps)
         setShowDialog(true)
@@ -80,7 +86,7 @@ const CanvasNode = ({ data }) => {
             } else if (componentNode.badge === 'DEPRECATING') {
                 setWarningMessage(
                     componentNode?.deprecateMessage ??
-                        'This node will be deprecated in the next release. Change to a new node tagged with NEW'
+                        t('canvas.nodeDeprecationMessage')
                 )
             } else {
                 setWarningMessage('')
@@ -112,7 +118,7 @@ const CanvasNode = ({ data }) => {
                             }}
                         >
                             <IconButton
-                                title='Duplicate'
+                                title={t('canvas.duplicate')}
                                 onClick={() => {
                                     duplicateNode(data.id)
                                 }}
@@ -122,7 +128,7 @@ const CanvasNode = ({ data }) => {
                                 <IconCopy />
                             </IconButton>
                             <IconButton
-                                title='Delete'
+                                title={t('canvas.delete')}
                                 onClick={() => {
                                     deleteNode(data.id)
                                 }}
@@ -132,7 +138,7 @@ const CanvasNode = ({ data }) => {
                                 <IconTrash />
                             </IconButton>
                             <IconButton
-                                title='Info'
+                                title={t('canvas.info')}
                                 onClick={() => {
                                     setInfoDialogProps({ data })
                                     setShowInfoDialog(true)
@@ -215,7 +221,7 @@ const CanvasNode = ({ data }) => {
                                             textAlign: 'center'
                                         }}
                                     >
-                                        Inputs
+                                        {t('canvas.inputs')}
                                     </Typography>
                                 </Box>
                                 <Divider />
@@ -253,7 +259,7 @@ const CanvasNode = ({ data }) => {
                                 }}
                             >
                                 <Button sx={{ borderRadius: 25, width: '90%', mb: 2 }} variant='outlined' onClick={onDialogClicked}>
-                                    Additional Parameters
+                                    {t('canvas.additionalParameters')}
                                 </Button>
                             </div>
                         )}
@@ -266,7 +272,7 @@ const CanvasNode = ({ data }) => {
                                         textAlign: 'center'
                                     }}
                                 >
-                                    Output
+                                    {t('canvas.output')}
                                 </Typography>
                             </Box>
                         )}

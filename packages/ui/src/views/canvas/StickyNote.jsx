@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux'
 // material-ui
 import { useTheme, darken, lighten } from '@mui/material/styles'
 
+// 添加国际化 hook
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // project imports
 import NodeCardWrapper from '@/ui-component/cards/NodeCardWrapper'
 import NodeTooltip from '@/ui-component/tooltip/NodeTooltip'
@@ -21,6 +24,7 @@ const StickyNote = ({ data }) => {
     const customization = useSelector((state) => state.customization)
     const { deleteNode, duplicateNode } = useContext(flowContext)
     const [inputParam] = data.inputParams
+    const { t } = useLanguage()
 
     const [open, setOpen] = useState(false)
 
@@ -74,7 +78,7 @@ const StickyNote = ({ data }) => {
                             }}
                         >
                             <IconButton
-                                title='Duplicate'
+                                title={t('canvas.duplicate')}
                                 onClick={() => {
                                     duplicateNode(data.id)
                                 }}
@@ -88,7 +92,7 @@ const StickyNote = ({ data }) => {
                                 <IconCopy />
                             </IconButton>
                             <IconButton
-                                title='Delete'
+                                title={t('canvas.delete')}
                                 onClick={() => {
                                     deleteNode(data.id)
                                 }}

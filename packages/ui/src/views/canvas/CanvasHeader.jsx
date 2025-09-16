@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 
 // material-ui
 import { useTheme } from '@mui/material/styles'
@@ -9,6 +9,9 @@ import { Avatar, Box, ButtonBase, Typography, Stack, TextField, Button } from '@
 
 // icons
 import { IconSettings, IconChevronLeft, IconDeviceFloppy, IconPencil, IconCheck, IconX, IconCode } from '@tabler/icons-react'
+
+// 添加国际化 hook
+import { useLanguage } from '@/store/context/LanguageContext'
 
 // project imports
 import Settings from '@/views/settings'
@@ -40,6 +43,8 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
     const navigate = useNavigate()
     const flowNameRef = useRef()
     const settingsRef = useRef()
+    // 获取翻译函数
+    const { t } = useLanguage()
 
     const [isEditingFlowName, setEditingFlowName] = useState(null)
     const [flowName, setFlowName] = useState('')
@@ -63,7 +68,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
 
     const [savePermission, setSavePermission] = useState(isAgentCanvas ? 'agentflows:create' : 'chatflows:create')
 
-    const title = isAgentCanvas ? 'Agents' : 'Chatflow'
+    const title = isAgentCanvas ? t('canvas.agents') : t('canvas.chatflow')
 
     const updateChatflowApi = useApi(chatflowsApi.updateChatflow)
     const canvas = useSelector((state) => state.canvas)
@@ -75,21 +80,21 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
             handleDeleteFlow()
         } else if (setting === 'viewMessages') {
             setViewMessagesDialogProps({
-                title: 'View Messages',
+                title: t('canvas.viewMessages'),
                 chatflow: chatflow,
                 isChatflow: isAgentflowV2 ? false : true
             })
             setViewMessagesDialogOpen(true)
         } else if (setting === 'viewLeads') {
             setViewLeadsDialogProps({
-                title: 'View Leads',
+                title: t('canvas.viewLeads'),
                 chatflow: chatflow
             })
             setViewLeadsDialogOpen(true)
         } else if (setting === 'saveAsTemplate') {
             if (canvas.isDirty) {
                 enqueueSnackbar({
-                    message: 'Please save the flow before exporting as template',
+                    message: t('canvas.pleaseSaveBeforeExport'),
                     options: {
                         key: new Date().getTime() + Math.random(),
                         variant: 'error',
@@ -104,19 +109,19 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
                 return
             }
             setExportAsTemplateDialogProps({
-                title: 'Export As Template',
+                title: t('canvas.exportAsTemplate'),
                 chatflow: chatflow
             })
             setExportAsTemplateDialogOpen(true)
         } else if (setting === 'viewUpsertHistory') {
             setUpsertHistoryDialogProps({
-                title: 'View Upsert History',
+                title: t('canvas.viewUpsertHistory'),
                 chatflow: chatflow
             })
             setUpsertHistoryDialogOpen(true)
         } else if (setting === 'chatflowConfiguration') {
             setChatflowConfigurationDialogProps({
-                title: `${title} Configuration`,
+                title: `${title} ${t('canvas.configuration')}`,
                 chatflow: chatflow
             })
             setChatflowConfigurationDialogOpen(true)
@@ -140,7 +145,6 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
             try {
                 const flowData = JSON.parse(chatflow.flowData)
                 let dataStr = JSON.stringify(generateExportFlowData(flowData), null, 2)
-                //let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr)
                 const blob = new Blob([dataStr], { type: 'application/json' })
                 const dataUri = URL.createObjectURL(blob)
 
@@ -202,7 +206,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
         }
 
         setAPIDialogProps({
-            title: 'Embed in website or use as API',
+            title: t('canvas.embedInWebsite'),
             chatflowid: chatflow.id,
             chatflowApiKeyId: chatflow.apikeyid,
             isFormDataRequired,
@@ -241,19 +245,19 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
             // if configuration dialog is open, update its data
             if (chatflowConfigurationDialogOpen) {
                 setChatflowConfigurationDialogProps({
-                    title: `${title} Configuration`,
+                    title: `${title} ${t('canvas.configuration')}`,
                     chatflow
                 })
             }
         }
-    }, [chatflow, title, chatflowConfigurationDialogOpen])
+    }, [chatflow, title, chatflowConfigurationDialogOpen, t])
 
     return (
         <>
             <Stack flexDirection='row' justifyContent='space-between' sx={{ width: '100%' }}>
                 <Stack flexDirection='row' sx={{ width: '100%', maxWidth: '50%' }}>
                     <Box>
-                        <ButtonBase title='Back' sx={{ borderRadius: '50%' }}>
+                        <ButtonBase title={t('common.back')} sx={{ borderRadius: '50%' }}>
                             <Avatar
                                 variant='rounded'
                                 sx={{
@@ -297,7 +301,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
                                 </Typography>
                                 {chatflow?.id && (
                                     <Available permission={savePermission}>
-                                        <ButtonBase title='Edit Name' sx={{ borderRadius: '50%' }}>
+                                        <ButtonBase title={t('canvas.editName')} sx={{ borderRadius: '50%' }}>
                                             <Avatar
                                                 variant='rounded'
                                                 sx={{
@@ -341,7 +345,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
                                         }
                                     }}
                                 />
-                                <ButtonBase title='Save Name' sx={{ borderRadius: '50%' }}>
+                                <ButtonBase title={t('common.save')} sx={{ borderRadius: '50%' }}>
                                     <Avatar
                                         variant='rounded'
                                         sx={{
@@ -362,7 +366,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
                                         <IconCheck stroke={1.5} size='1.3rem' />
                                     </Avatar>
                                 </ButtonBase>
-                                <ButtonBase title='Cancel' sx={{ borderRadius: '50%' }}>
+                                <ButtonBase title={t('common.cancel')} sx={{ borderRadius: '50%' }}>
                                     <Avatar
                                         variant='rounded'
                                         sx={{
@@ -389,7 +393,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
                 </Stack>
                 <Box>
                     {chatflow?.id && (
-                        <ButtonBase title='API Endpoint' sx={{ borderRadius: '50%', mr: 2 }}>
+                        <ButtonBase title={t('canvas.apiEndpoint')} sx={{ borderRadius: '50%', mr: 2 }}>
                             <Avatar
                                 variant='rounded'
                                 sx={{
@@ -411,7 +415,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
                         </ButtonBase>
                     )}
                     <Available permission={savePermission}>
-                        <ButtonBase title={`Save ${title}`} sx={{ borderRadius: '50%', mr: 2 }}>
+                        <ButtonBase title={`${t('common.save')} ${title}`} sx={{ borderRadius: '50%', mr: 2 }}>
                             <Avatar
                                 variant='rounded'
                                 sx={{
@@ -432,7 +436,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
                             </Avatar>
                         </ButtonBase>
                     </Available>
-                    <ButtonBase ref={settingsRef} title='Settings' sx={{ borderRadius: '50%' }}>
+                    <ButtonBase ref={settingsRef} title={t('common.settings')} sx={{ borderRadius: '50%' }}>
                         <Avatar
                             variant='rounded'
                             sx={{
@@ -465,9 +469,9 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, isAgentflowV2, handleSaveFlow, 
             <SaveChatflowDialog
                 show={flowDialogOpen}
                 dialogProps={{
-                    title: `Save New ${title}`,
-                    confirmButtonName: 'Save',
-                    cancelButtonName: 'Cancel'
+                    title: `${t('canvas.saveNew')} ${title}`,
+                    confirmButtonName: t('common.save'),
+                    cancelButtonName: t('common.cancel')
                 }}
                 onCancel={() => setFlowDialogOpen(false)}
                 onConfirm={onConfirmSaveName}

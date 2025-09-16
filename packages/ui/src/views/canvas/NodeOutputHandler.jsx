@@ -10,6 +10,9 @@ import { flowContext } from '@/store/context/ReactFlowContext'
 import { isValidConnection } from '@/utils/genericHelper'
 import { Dropdown } from '@/ui-component/dropdown/Dropdown'
 
+// 添加国际化 hook
+import { useLanguage } from '@/store/context/LanguageContext'
+
 const CustomWidthTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)({
     [`& .${tooltipClasses.tooltip}`]: {
         maxWidth: 500
@@ -19,6 +22,8 @@ const CustomWidthTooltip = styled(({ className, ...props }) => <Tooltip {...prop
 // ===========================|| NodeOutputHandler ||=========================== //
 
 const NodeOutputHandler = ({ outputAnchor, data, disabled = false }) => {
+    // 添加国际化 hook
+    const { t } = useLanguage()
     const theme = useTheme()
     const ref = useRef(null)
     const updateNodeInternals = useUpdateNodeInternals()
@@ -148,7 +153,7 @@ const NodeOutputHandler = ({ outputAnchor, data, disabled = false }) => {
                         </CustomWidthTooltip>
                         <div style={{ flex: 1 }}></div>
                         <Box sx={{ p: 2, textAlign: 'end' }}>
-                            <Typography>True</Typography>
+                            <Typography>{t('canvas.true')}</Typography>
                         </Box>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -175,7 +180,7 @@ const NodeOutputHandler = ({ outputAnchor, data, disabled = false }) => {
                         </CustomWidthTooltip>
                         <div style={{ flex: 1 }}></div>
                         <Box sx={{ p: 2, textAlign: 'end' }}>
-                            <Typography>False</Typography>
+                            <Typography>{t('canvas.false')}</Typography>
                         </Box>
                     </div>
                 </div>
@@ -215,7 +220,7 @@ const NodeOutputHandler = ({ outputAnchor, data, disabled = false }) => {
                                     setDropdownValue(newValue)
                                     data.outputs[outputAnchor.name] = newValue
                                 }}
-                                value={data.outputs[outputAnchor.name] ?? outputAnchor.default ?? 'choose an option'}
+                                value={data.outputs[outputAnchor.name] ?? outputAnchor.default ?? t('canvas.chooseAnOption')}
                             />
                         </Box>
                     </>

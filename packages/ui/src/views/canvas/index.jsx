@@ -17,6 +17,9 @@ import { omit, cloneDeep } from 'lodash'
 import { Toolbar, Box, AppBar, Button, Fab } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
+// 添加国际化 hook
+import { useLanguage } from '@/store/context/LanguageContext'
+
 // project imports
 import CanvasNode from './CanvasNode'
 import ButtonEdge from './ButtonEdge'
@@ -61,6 +64,7 @@ const edgeTypes = { buttonedge: ButtonEdge }
 // ==============================|| CANVAS ||============================== //
 
 const Canvas = () => {
+    const { t } = useLanguage()
     const theme = useTheme()
     const navigate = useNavigate()
     const { hasAssignedWorkspace } = useAuth()
@@ -69,10 +73,9 @@ const Canvas = () => {
     const templateFlowData = state ? state.templateFlowData : ''
 
     const URLpath = document.location.pathname.toString().split('/')
-    const chatflowId =
-        URLpath[URLpath.length - 1] === 'canvas' || URLpath[URLpath.length - 1] === 'agentcanvas' ? '' : URLpath[URLpath.length - 1]
+    const chatflowId = URLpath[URLpath.length - 1] === 'canvas' || URLpath[URLpath.length - 1] === 'agentcanvas' ? '' : URLpath[URLpath.length - 1]
     const isAgentCanvas = URLpath.includes('agentcanvas') ? true : false
-    const canvasTitle = URLpath.includes('agentcanvas') ? 'Agent' : 'Chatflow'
+    const canvasTitle = URLpath.includes('agentcanvas') ? t('canvas.agents') : t('canvas.chatflow')
 
     const { confirm } = useConfirm()
 
@@ -177,10 +180,10 @@ const Canvas = () => {
 
     const handleDeleteFlow = async () => {
         const confirmPayload = {
-            title: `Delete`,
-            description: `Delete ${canvasTitle} ${chatflow.name}?`,
-            confirmButtonName: 'Delete',
-            cancelButtonName: 'Cancel'
+            title: t('canvas.delete'),
+            description: t('canvas.deleteChatflow', { chatflowTitle: canvasTitle, name: chatflow.name }),
+            confirmButtonName: t('canvas.delete'),
+            cancelButtonName: t('common.cancel')
         }
         const isConfirmed = await confirm(confirmPayload)
 
@@ -348,7 +351,7 @@ const Canvas = () => {
     const saveChatflowSuccess = () => {
         dispatch({ type: REMOVE_DIRTY })
         enqueueSnackbar({
-            message: `${canvasTitle} saved`,
+            message: t('canvas.chatflowSaved', { canvasTitle }),
             options: {
                 key: new Date().getTime() + Math.random(),
                 variant: 'success',
@@ -398,7 +401,6 @@ const Canvas = () => {
                 return
             }
         }
-
         setIsSyncNodesButtonEnabled(false)
     }
 
@@ -419,7 +421,7 @@ const Canvas = () => {
             setEdges(initialFlow.edges || [])
             dispatch({ type: SET_CHATFLOW, chatflow })
         } else if (getSpecificChatflowApi.error) {
-            errorFailed(`Failed to retrieve ${canvasTitle}: ${getSpecificChatflowApi.error.response.data.message}`)
+            errorFailed(t('canvas.failedToRetrieve', { canvasTitle, message: getSpecificChatflowApi.error.response.data.message }))
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -433,7 +435,7 @@ const Canvas = () => {
             saveChatflowSuccess()
             window.history.replaceState(state, null, `/${isAgentCanvas ? 'agentcanvas' : 'canvas'}/${chatflow.id}`)
         } else if (createNewChatflowApi.error) {
-            errorFailed(`Failed to retrieve ${canvasTitle}: ${createNewChatflowApi.error.response.data.message}`)
+            errorFailed(t('canvas.failedToRetrieve', { canvasTitle, message: createNewChatflowApi.error.response.data.message }))
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -446,7 +448,7 @@ const Canvas = () => {
             setLasUpdatedDateTime(updateChatflowApi.data.updatedDate)
             saveChatflowSuccess()
         } else if (updateChatflowApi.error) {
-            errorFailed(`Failed to retrieve ${canvasTitle}: ${updateChatflowApi.error.response.data.message}`)
+            errorFailed(t('canvas.failedToRetrieve', { canvasTitle, message: updateChatflowApi.error.response.data.message }))
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -457,10 +459,10 @@ const Canvas = () => {
         const checkIfHasChanged = async () => {
             if (getHasChatflowChangedApi.data?.hasChanged === true) {
                 const confirmPayload = {
-                    title: `Confirm Change`,
-                    description: `${canvasTitle} ${chatflow.name} has changed since you have opened, overwrite changes?`,
-                    confirmButtonName: 'Confirm',
-                    cancelButtonName: 'Cancel'
+                    title: t('canvas.confirmChange'),
+                    description: t('canvas.chatflowChanged', { canvasTitle, name: chatflow.name }),
+                    confirmButtonName: t('canvas.confirm'),
+                    cancelButtonName: t('common.cancel')
                 }
                 const isConfirmed = await confirm(confirmPayload)
 
@@ -510,7 +512,7 @@ const Canvas = () => {
             dispatch({
                 type: SET_CHATFLOW,
                 chatflow: {
-                    name: `Untitled ${canvasTitle}`
+                    name: t('canvas.untitled', { canvasTitle })
                 }
             })
         }
@@ -555,7 +557,7 @@ const Canvas = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [templateFlowData])
 
-    usePrompt('You have unsaved changes! Do you want to navigate away?', canvasDataStore.isDirty)
+    usePrompt(t('canvas.unsavedChanges'), canvasDataStore.isDirty)
 
     return (
         <>
@@ -616,8 +618,8 @@ const Canvas = () => {
                                         onClick={() => {
                                             setIsSnappingEnabled(!isSnappingEnabled)
                                         }}
-                                        title='toggle snapping'
-                                        aria-label='toggle snapping'
+                                        title={t('canvas.toggleSnapping')}
+                                        aria-label={t('canvas.toggleSnapping')}
                                     >
                                         {isSnappingEnabled ? <IconMagnetFilled /> : <IconMagnetOff />}
                                     </button>
@@ -638,7 +640,7 @@ const Canvas = () => {
                                         }}
                                         size='small'
                                         aria-label='sync'
-                                        title='Sync Nodes'
+                                        title={t('canvas.syncNodes')}
                                         onClick={() => syncNodes()}
                                     >
                                         <IconRefreshAlert />

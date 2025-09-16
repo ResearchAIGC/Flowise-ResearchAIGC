@@ -123,7 +123,7 @@ const Marketplace = () => {
     const share = (template) => {
         const dialogProps = {
             type: 'EDIT',
-            cancelButtonName: t('cancel'),
+            cancelButtonName: t('common.cancel'),
             confirmButtonName: t('marketplaceShareTitle'),
             data: {
                 id: template.id,
@@ -227,7 +227,7 @@ const Marketplace = () => {
             title: t('marketplaceDeleteTitle'),
             description: `${t('marketplaceDeleteConfirm')} ${template.name}？`,
             confirmButtonName: t('marketplaceDeleteTitle'),
-            cancelButtonName: t('cancel')
+            cancelButtonName: t('common.cancel')
         }
 
         const isConfirmed = await confirm(confirmPayload)
@@ -330,7 +330,7 @@ const Marketplace = () => {
         const dialogProp = {
             title: t('marketplaceAddNewTool'),
             type: 'IMPORT',
-            cancelButtonName: t('cancel'),
+            cancelButtonName: t('common.cancel'),
             confirmButtonName: t('marketplaceAddButton'),
             data: selectedTool
         }

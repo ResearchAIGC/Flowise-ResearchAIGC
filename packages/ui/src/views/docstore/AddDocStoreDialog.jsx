@@ -206,7 +206,7 @@ const AddDocStoreDialog = ({ show, dialogProps, onCancel, onConfirm }) => {
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => onCancel()}>{t('cancel')}</Button>
+                <Button onClick={() => onCancel()}>{t('common.cancel')}</Button>
                 <StyledButton
                     disabled={!documentStoreName}
                     variant='contained'

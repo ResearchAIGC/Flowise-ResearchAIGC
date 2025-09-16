@@ -441,10 +441,10 @@ const AgentExecutions = () => {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleDeleteDialogClose} color='primary'>
-                                {t('cancel')}
+                                {t('common.cancel')}
                             </Button>
                             <Button onClick={handleDeleteExecutions} color='error'>
-                                {t('delete')}
+                                {t('common.delete')}
                             </Button>
                         </DialogActions>
                     </Dialog>

@@ -280,7 +280,7 @@ const APIKey = () => {
         const dialogProp = {
             title: t('apikey.addNewApiKey'),
             type: 'ADD',
-            cancelButtonName: t('cancel'),
+            cancelButtonName: t('common.cancel'),
             confirmButtonName: t('addNew'),
             customBtnId: 'btn_confirmAddingApiKey'
         }
@@ -292,8 +292,8 @@ const APIKey = () => {
         const dialogProp = {
             title: t('apikey.editApiKey'),
             type: 'EDIT',
-            cancelButtonName: t('cancel'),
-            confirmButtonName: t('save'),
+            cancelButtonName: t('common.cancel'),
+            confirmButtonName: t('common.save'),
             customBtnId: 'btn_confirmEditingApiKey',
             key
         }
@@ -304,7 +304,7 @@ const APIKey = () => {
     const uploadDialog = () => {
         const dialogProp = {
             type: 'ADD',
-            cancelButtonName: t('cancel'),
+            cancelButtonName: t('common.cancel'),
             confirmButtonName: t('apikey.import'),
             data: {}
         }
@@ -320,7 +320,7 @@ const APIKey = () => {
                     ? `Delete key [${key.keyName}] ? `
                     : t('apikey.deleteConfirmWithUsage', { count: key.chatFlows.length }),
             confirmButtonName: t('apikey.deleteApiKey'),
-            cancelButtonName: t('cancel'),
+            cancelButtonName: t('common.cancel'),
             customBtnId: 'btn_initiateDeleteApiKey'
         }
         const isConfirmed = await confirm(confirmPayload)

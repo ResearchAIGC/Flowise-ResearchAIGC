@@ -46,7 +46,7 @@ const CustomAssistantLayout = () => {
         const dialogProp = {
             title: t('addNewAssistant'),
             type: 'ADD',
-            cancelButtonName: t('cancel'),
+            cancelButtonName: t('common.cancel'),
             confirmButtonName: t('addNew')
         }
         setDialogProps(dialogProp)

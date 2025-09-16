@@ -62,7 +62,7 @@ const OpenAIAssistantLayout = () => {
         const dialogProp = {
             title: t('addNewAssistant'),
             type: 'ADD',
-            cancelButtonName: t('cancel'),
+            cancelButtonName: t('common.cancel'),
             confirmButtonName: t('addNew'),
             selectedOpenAIAssistantId,
             credential
@@ -75,8 +75,8 @@ const OpenAIAssistantLayout = () => {
         const dialogProp = {
             title: t('editAssistant'),
             type: 'EDIT',
-            cancelButtonName: t('cancel'),
-            confirmButtonName: t('save'),
+            cancelButtonName: t('common.cancel'),
+            confirmButtonName: t('common.save'),
             data: selectedAssistant
         }
         setDialogProps(dialogProp)

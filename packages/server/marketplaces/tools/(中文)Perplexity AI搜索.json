@@ -1,0 +1,8 @@
+{
+    "name": "perplexity_ai_search",
+    "description": "使用Perplexity AI在线模型进行研究时很有用。",
+    "color": "linear-gradient(rgb(155,190,84), rgb(176,69,245))",
+    "iconSrc": "https://raw.githubusercontent.com/AsharibAli/project-images/main/perplexity-ai-icon.svg",
+    "schema": "[{\"id\":1,\"property\":\"query\",\"description\":\"研究查询\",\"type\":\"string\",\"required\":true}]",
+    "func": "const fetch = require('node-fetch');\nconst apiKey = '';  // 在此处输入您的Perplexity API密钥。\n\nconst query = $query;\n\nconst options = {\n\tmethod: 'POST',\n\theaders: {\n\t\t'Content-Type': 'application/json',\n\t\t'Authorization': `Bearer ${apiKey}`\n\t},\n\tbody: JSON.stringify({\n\t\tmodel: 'sonar',  // 模型\n\t\tmessages: [\n\t\t\t{\n\t\t\t\trole: 'system',\n\t\t\t\tcontent: '您是一名市场研究助手。'\n\t\t\t},\n\t\t\t{\n\t\t\t\trole: 'user',\n\t\t\t\tcontent: query\n\t\t\t}\n\t\t]\n\t})\n};\n\ntry {\n\tconsole.log(`发送请求，查询内容：${query}`);\n\tconst response = await fetch('https://api.perplexity.ai/chat/completions', options);\n\tconst data = await response.json();\n\n\tif (!response.ok) {\n\t\tthrow new Error(`API错误：${response.status} ${response.statusText} - ${JSON.stringify(data)}`);\n\t}\n\n\tconsole.log('API响应:', data);\n\treturn JSON.stringify(data);\n} catch (error) {\n\tconsole.error('从Perplexity AI获取数据时发生错误:', error);\n\treturn `从Perplexity AI获取数据时发生错误：${error.message}`;\n}"
+}

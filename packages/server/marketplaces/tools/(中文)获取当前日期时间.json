@@ -1,0 +1,8 @@
+{
+    "name": "todays_date_time",
+    "description": "获取今天的日期、时间和星期几",
+    "color": "linear-gradient(rgb(208,63,17), rgb(190,19,19))",
+    "iconSrc": "https://cdn-icons-png.flaticon.com/512/5977/5977516.png",
+    "schema": "[]",
+    "func": "// 获取当前日期时间\nconst now = new Date();\n\n// 格式化日期时间\nconst year = now.getFullYear();\nconst month = String(now.getMonth() + 1).padStart(2, '0');\nconst day = String(now.getDate()).padStart(2, '0');\nconst hours = String(now.getHours()).padStart(2, '0');\nconst minutes = String(now.getMinutes()).padStart(2, '0');\nconst seconds = String(now.getSeconds()).padStart(2, '0');\n\n// 获取星期几\nconst weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];\nconst weekday = weekdays[now.getDay()];\n\n// 返回格式化的日期时间字符串\nconst formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds} ${weekday}`;\nreturn formattedDateTime;\n// 输出示例: 2023-12-25 14:30:45 Monday\n// 可以根据需要修改返回格式"
+}

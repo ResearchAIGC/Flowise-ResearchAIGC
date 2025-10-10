@@ -1,7 +1,7 @@
 module.exports = {
     extends: [
         'eslint:recommended',
-        'plugin:markdown/recommended',
+        'plugin:@eslint/markdown/recommended',
         'plugin:react/recommended',
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',

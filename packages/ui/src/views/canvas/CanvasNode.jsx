@@ -88,6 +88,8 @@ const CanvasNode = ({ data }) => {
                     componentNode?.deprecateMessage ??
                         t('canvas.nodeDeprecationMessage')
                 )
+            } else if (componentNode.warning) {
+                setWarningMessage(componentNode.warning)
             } else {
                 setWarningMessage('')
             }

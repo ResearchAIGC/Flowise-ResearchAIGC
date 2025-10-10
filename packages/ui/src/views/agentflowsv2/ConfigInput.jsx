@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { cloneDeep } from 'lodash'
 
 // Material
-import { Accordion, AccordionSummary, AccordionDetails, Box, Typography } from '@mui/material'
+import { Accordion, AccordionSummary, AccordionDetails, Box, Typography, Tooltip, IconButton } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { IconSettings } from '@tabler/icons-react'
+import { IconSettings, IconAlertTriangle } from '@tabler/icons-react'
 
 // Project imports
 import NodeInputHandler from '../canvas/NodeInputHandler'
@@ -296,6 +296,21 @@ export const ConfigInput = ({ data, inputParam, disabled = false, arrayIndex = n
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ background: 'transparent' }}>
                         <IconSettings stroke={1.5} size='1.3rem' />
                         <Typography sx={{ ml: 1 }}>{selectedComponentNodeData?.label} {t('parameters')}</Typography>
+                        <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                            <IconSettings stroke={1.5} size='1.3rem' />
+                            <Typography sx={{ ml: 1 }}>{selectedComponentNodeData?.label} Parameters</Typography>
+                            <div style={{ flexGrow: 1 }}></div>
+                            {selectedComponentNodeData?.warning && (
+                                <Tooltip
+                                    title={<span style={{ whiteSpace: 'pre-line' }}>{selectedComponentNodeData.warning}</span>}
+                                    placement='top'
+                                >
+                                    <IconButton sx={{ height: 35, width: 35 }}>
+                                        <IconAlertTriangle size={20} color='orange' />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                        </div>
                     </AccordionSummary>
                     <AccordionDetails>
                         {(selectedComponentNodeData.inputParams ?? [])
